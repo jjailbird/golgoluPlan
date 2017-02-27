@@ -1,0 +1,227 @@
+@import url("/fonts/style.css");
+
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+/* CSS declarations go here */
+.root {
+  min-height: '400px';
+  text-align: center;
+  padding: 1em 0.7em;
+}
+
+.content-center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+a.link-normal {
+  color: #fff;
+}
+
+div.full-area {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+}
+table.full-area {
+  width: 100%;
+  height: 100%;
+}
+table.center {
+  vertical-align: middle;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+.app-bar {
+  box-shadow: '0 2px 5px rgba(0, 0, 0, 0.5)',
+}
+
+.app-bar.mobile {
+  text-align: center;
+}
+.sticky .top {
+    position: fixed;
+    /* width: 100%; */
+    left: 0;
+    top: 0;
+    z-index: 100;
+    border-top: 0;
+}
+
+.text-field-default {
+  display: block;
+  width: '100%';
+}
+
+.counsel-step-content {
+  text-align: left;
+  position: absolute;
+  top: 64px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+}
+
+.counsel-step-content.bg-gray {
+  background-color: #e8e8e8;
+}
+
+.counsel-step-content > .description {
+  padding: 0px 20px;
+  font-weight: normal;
+}
+
+.font-normal {
+  font-weight: normal;
+}
+
+.inline {
+  display: inline-block;
+}
+
+.inline-block-vertical-middle {
+  display: inline-block; vertical-align: middle
+}
+
+.counsel-step-button-container {
+  padding: 0.1em 1.2em;
+  margin-bottom: 16px;
+}
+
+.counsel-step-button-container h1.step-title {
+  margin: 0px 0px 10px 0px !important;
+  font-size: 2.4em !important;
+}
+.counsel-step-button-container > table {
+  width: 100%; 
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.counsel-step-button-container > table tr td:nth-child(2) {
+  text-align: center;
+}
+
+.text-unit-cm::after {
+  position: absolute;
+  right: 4px;
+  top: 40px;
+  content: "cm";
+}
+
+.text-unit-kg::after {
+  position: absolute;
+  right: 4px;
+  top: 40px;
+  content: "kg";
+}
+
+.input-user::before {
+  position: absolute;
+  font-family: 'golgoruPaln';
+  font-size: 18px;
+  color: #fff;
+  content: "\e91c";
+  top: 8px;
+  left: 20px; 
+}
+.input-email::before {
+  position: absolute;
+  font-family: 'golgoruPaln';
+  font-size: 18px;
+  color: #fff;
+  content: "\e918";
+  top: 8px;
+  left: 20px; 
+}
+.input-password::before {
+  position: absolute;
+  font-family: 'golgoruPaln';
+  font-size: 18px;
+  color: #fff;
+  content: "\e917";
+  top: 8px;
+  left: 20px; 
+}
+.button-naver > button::before {
+  position: absolute;
+  font-family: 'golgoruPaln';
+  font-size: 24px;
+  color: #fff;
+  content: "\e91b";
+  top: 2px;
+  left: 20px; 
+}
+.button-facebook > button::before {
+  position: absolute;
+  font-family: 'golgoruPaln';
+  font-size: 24px;
+  color: #fff;
+  content: "\e919";
+  top: 2px;
+  left: 20px; 
+}
+
+select.select-underline-mini {
+  border-radius: 0px;
+  border-style: none;
+  border-bottom: 2px solid;
+  border-bottom-color: #4ab046; 
+  background-color: transparent;
+  font-size: 13px;
+  width: 100%;
+  height: 24px;
+}
+
+select.label-register::before {
+  content: '등록일자';
+}
+
+table.family-profile td {
+  padding: 10px;
+}
+
+img.profile-avata {
+  border: 2px solid #fff; 
+}
+
+table.ehdQuestions tr td:nth-child(2) {
+  padding-left: 10px;
+  text-align: left;
+}
+
+.ehdAnswers > .ehdAnswerRow {
+  margin-bottom: 10px;
+}
+.ehdAnswer-check-button {
+  text-align: left;
+  overflow: auto;
+  border: 1px solid #4ab046;
+  cursor: pointer;
+}
+.ehdAnswer-check-button > div {
+  padding: 10px;
+}
+.ehdAnswer-check-button > div:nth-child(1) {
+  width: 50px;
+  float: left;
+  background-color: #4ab046;
+  color: #fff;
+  text-align: center;
+  border-bottom: 1px solid #4ab046;
+}
+.ehdAnswer-check-button > div:nth-child(2) {
+  float: left;
+}
+.ehdAnswer-check-button > div:nth-child(3) {
+  width: 50px;
+  float: right;
+  /* background-color: #efefef; */
+  text-align: center;
+}

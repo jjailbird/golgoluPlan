@@ -1,0 +1,483 @@
+{
+  "description": "2007년 표준 성장도표", 
+  "male": [
+    {
+        "age_under(month)": 1,
+        "weight(kg)": 3.41,
+        "height(cm)": 50.12,
+        "head(cm)": 34.7
+    },
+    {
+        "age_under(month)": 2,
+        "weight(kg)": 5.68,
+        "height(cm)": 57.7,
+        "head(cm)": 38.3
+    },
+    {
+        "age_under(month)": 3,
+        "weight(kg)": 6.45,
+        "height(cm)": 60.9,
+        "head(cm)": 39.85
+    },
+    {
+        "age_under(month)": 4,
+        "weight(kg)": 7.04,
+        "height(cm)": 63.47,
+        "head(cm)": 41.05
+    },
+    {
+        "age_under(month)": 5,
+        "weight(kg)": 7.54,
+        "height(cm)": 65.65,
+        "head(cm)": 42.02
+    },
+    {
+        "age_under(month)": 6,
+        "weight(kg)": 7.97,
+        "height(cm)": 67.56,
+        "head(cm)": 42.83
+    },
+    {
+        "age_under(month)": 7,
+        "weight(kg)": 8.36,
+        "height(cm)": 69.27,
+        "head(cm)": 43.51
+    },
+    {
+        "age_under(month)": 8,
+        "weight(kg)": 8.71,
+        "height(cm)": 70.83,
+        "head(cm)": 44.11
+    },
+    {
+        "age_under(month)": 9,
+        "weight(kg)": 9.04,
+        "height(cm)": 72.26,
+        "head(cm)": 44.63
+    },
+    {
+        "age_under(month)": 10,
+        "weight(kg)": 9.34,
+        "height(cm)": 73.6,
+        "head(cm)": 45.09
+    },
+    {
+        "age_under(month)": 11,
+        "weight(kg)": 9.63,
+        "height(cm)": 74.85,
+        "head(cm)": 45.51
+    },
+    {
+        "age_under(month)": 12,
+        "weight(kg)": 9.9,
+        "height(cm)": 76.03,
+        "head(cm)": 45.88
+    },
+    {
+        "age_under(month)": 15,
+        "weight(kg)": 10.41,
+        "height(cm)": 78.22,
+        "head(cm)": 46.53
+    },
+    {
+        "age_under(month)": 18,
+        "weight(kg)": 11.1,
+        "height(cm)": 81.15,
+        "head(cm)": 47.32
+    },
+    {
+        "age_under(month)": 21,
+        "weight(kg)": 11.74,
+        "height(cm)": 83.77,
+        "head(cm)": 47.94
+    },
+    {
+        "age_under(month)": 24,
+        "weight(kg)": 12.33,
+        "height(cm)": 86.15,
+        "head(cm)": 48.45
+    },
+    {
+        "age_under(month)": 30,
+        "weight(kg)": 13.14,
+        "height(cm)": 89.38,
+        "bmi(kg/m2)": 16.71,
+        "head(cm)": 49.06
+    },
+    {
+        "age_under(month)": 36,
+        "weight(kg)": 14.04,
+        "height(cm)": 93.13,
+        "bmi(kg/m2)": 16.29,
+        "head(cm)": 49.66
+    },
+    {
+        "age_under(month)": 42,
+        "weight(kg)": 14.92,
+        "height(cm)": 96.7,
+        "bmi(kg/m2)": 15.97,
+        "head(cm)": 50.1
+    },
+    {
+        "age_under(month)": 48,
+        "weight(kg)": 15.91,
+        "height(cm)": 100.3,
+        "bmi(kg/m2)": 15.75,
+        "head(cm)": 50.43
+    },
+    {
+        "age_under(month)": 54,
+        "weight(kg)": 16.97,
+        "height(cm)": 103.8,
+        "bmi(kg/m2)": 15.63,
+        "head(cm)": 50.68
+    },
+    {
+        "age_under(month)": 60,
+        "weight(kg)": 18.07,
+        "height(cm)": 107.2,
+        "bmi(kg/m2)": 15.59,
+        "head(cm)": 50.86
+    },
+    {
+        "age_under(month)": 66,
+        "weight(kg)": 19.22,
+        "height(cm)": 110.47,
+        "bmi(kg/m2)": 15.63,
+        "head(cm)": 51
+    },
+    {
+        "age_under(month)": 72,
+        "weight(kg)": 20.39,
+        "height(cm)": 113.62,
+        "bmi(kg/m2)": 15.72,
+        "head(cm)": 51.1
+    },
+    {
+        "age_under(month)": 78,
+        "weight(kg)": 21.6,
+        "height(cm)": 116.64,
+        "bmi(kg/m2)": 15.87,
+        "head(cm)": 51.17
+    },
+    {
+        "age_under(month)": 84,
+        "weight(kg)": 22.85,
+        "height(cm)": 119.54,
+        "bmi(kg/m2)": 16.06,
+        "head(cm)": 51.21
+    },
+    {
+        "age_under(month)": 96,
+        "weight(kg)": 24.84,
+        "height(cm)": 123.71,
+        "bmi(kg/m2)": 16.41
+    },
+    {
+        "age_under(month)": 108,
+        "weight(kg)": 27.81,
+        "height(cm)": 129.05,
+        "bmi(kg/m2)": 16.97
+    },
+    {
+        "age_under(month)": 120,
+        "weight(kg)": 31.32,
+        "height(cm)": 134.21,
+        "bmi(kg/m2)": 17.58
+    },
+    {
+        "age_under(month)": 132,
+        "weight(kg)": 35.5,
+        "height(cm)": 139.43,
+        "bmi(kg/m2)": 18.22
+    },
+    {
+        "age_under(month)": 144,
+        "weight(kg)": 40.3,
+        "height(cm)": 145.26,
+        "bmi(kg/m2)": 18.86
+    },
+    {
+        "age_under(month)": 156,
+        "weight(kg)": 45.48,
+        "height(cm)": 151.81,
+        "bmi(kg/m2)": 19.45
+    },
+    {
+        "age_under(month)": 168,
+        "weight(kg)": 50.66,
+        "height(cm)": 159.03,
+        "bmi(kg/m2)": 20
+    },
+    {
+        "age_under(month)": 180,
+        "weight(kg)": 55.42,
+        "height(cm)": 165.48,
+        "bmi(kg/m2)": 20.49
+    },
+    {
+        "age_under(month)": 192,
+        "weight(kg)": 59.4,
+        "height(cm)": 169.69,
+        "bmi(kg/m2)": 20.9
+    },
+    {
+        "age_under(month)": 204,
+        "weight(kg)": 62.41,
+        "height(cm)": 171.81,
+        "bmi(kg/m2)": 21.26
+    },
+    {
+        "age_under(month)": 216,
+        "weight(kg)": 64.46,
+        "height(cm)": 172.8,
+        "bmi(kg/m2)": 21.55
+    },
+    {
+        "age_under(month)": 228,
+        "weight(kg)": 65.76,
+        "height(cm)": 173.35,
+        "bmi(kg/m2)": 21.81
+    }
+  ],
+  "female": [
+    {
+        "age_under(month)": 1,
+        "weight(kg)": 3.29,
+        "height(cm)": 49.35,
+        "head(cm)": 34.05
+    },
+    {
+        "age_under(month)": 2,
+        "weight(kg)": 5.37,
+        "height(cm)": 56.65,
+        "head(cm)": 37.52
+    },
+    {
+        "age_under(month)": 3,
+        "weight(kg)": 6.08,
+        "height(cm)": 59.76,
+        "head(cm)": 39.02
+    },
+    {
+        "age_under(month)": 4,
+        "weight(kg)": 6.64,
+        "height(cm)": 62.28,
+        "head(cm)": 40.18
+    },
+    {
+        "age_under(month)": 5,
+        "weight(kg)": 7.1,
+        "height(cm)": 64.42,
+        "head(cm)": 41.12
+    },
+    {
+        "age_under(month)": 6,
+        "weight(kg)": 7.51,
+        "height(cm)": 66.31,
+        "head(cm)": 41.9
+    },
+    {
+        "age_under(month)": 7,
+        "weight(kg)": 7.88,
+        "height(cm)": 68.01,
+        "head(cm)": 42.57
+    },
+    {
+        "age_under(month)": 8,
+        "weight(kg)": 8.21,
+        "height(cm)": 69.56,
+        "head(cm)": 43.15
+    },
+    {
+        "age_under(month)": 9,
+        "weight(kg)": 8.52,
+        "height(cm)": 70.99,
+        "head(cm)": 43.66
+    },
+    {
+        "age_under(month)": 10,
+        "weight(kg)": 8.81,
+        "height(cm)": 72.33,
+        "head(cm)": 44.12
+    },
+    {
+        "age_under(month)": 11,
+        "weight(kg)": 9.09,
+        "height(cm)": 73.58,
+        "head(cm)": 44.53
+    },
+    {
+        "age_under(month)": 12,
+        "weight(kg)": 9.35,
+        "height(cm)": 74.76,
+        "head(cm)": 44.89
+    },
+    {
+        "age_under(month)": 15,
+        "weight(kg)": 9.84,
+        "height(cm)": 76.96,
+        "head(cm)": 45.54
+    },
+    {
+        "age_under(month)": 18,
+        "weight(kg)": 10.51,
+        "height(cm)": 79.91,
+        "head(cm)": 46.32
+    },
+    {
+        "age_under(month)": 21,
+        "weight(kg)": 11.13,
+        "height(cm)": 82.55,
+        "head(cm)": 46.95
+    },
+    {
+        "age_under(month)": 24,
+        "weight(kg)": 11.7,
+        "height(cm)": 84.97,
+        "head(cm)": 47.46
+    },
+    {
+        "age_under(month)": 30,
+        "weight(kg)": 12.5,
+        "height(cm)": 88.21,
+        "bmi(kg/m2)": 16.34,
+        "head(cm)": 48.08
+    },
+    {
+        "age_under(month)": 36,
+        "weight(kg)": 13.42,
+        "height(cm)": 91.93,
+        "bmi(kg/m2)": 16.01,
+        "head(cm)": 48.71
+    },
+    {
+        "age_under(month)": 42,
+        "weight(kg)": 14.32,
+        "height(cm)": 95.56,
+        "bmi(kg/m2)": 15.76,
+        "head(cm)": 49.18
+    },
+    {
+        "age_under(month)": 48,
+        "weight(kg)": 15.28,
+        "height(cm)": 99.2,
+        "bmi(kg/m2)": 15.59,
+        "head(cm)": 49.54
+    },
+    {
+        "age_under(month)": 54,
+        "weight(kg)": 16.3,
+        "height(cm)": 102.73,
+        "bmi(kg/m2)": 15.48,
+        "head(cm)": 49.82
+    },
+    {
+        "age_under(month)": 60,
+        "weight(kg)": 17.35,
+        "height(cm)": 106.14,
+        "bmi(kg/m2)": 15.43,
+        "head(cm)": 50.04
+    },
+    {
+        "age_under(month)": 66,
+        "weight(kg)": 18.44,
+        "height(cm)": 109.4,
+        "bmi(kg/m2)": 15.44,
+        "head(cm)": 50.21
+    },
+    {
+        "age_under(month)": 72,
+        "weight(kg)": 19.57,
+        "height(cm)": 112.51,
+        "bmi(kg/m2)": 15.5,
+        "head(cm)": 50.34
+    },
+    {
+        "age_under(month)": 78,
+        "weight(kg)": 20.73,
+        "height(cm)": 115.47,
+        "bmi(kg/m2)": 15.61,
+        "head(cm)": 50.44
+    },
+    {
+        "age_under(month)": 84,
+        "weight(kg)": 21.95,
+        "height(cm)": 118.31,
+        "bmi(kg/m2)": 15.75,
+        "head(cm)": 50.51
+    },
+    {
+        "age_under(month)": 96,
+        "weight(kg)": 23.92,
+        "height(cm)": 122.39,
+        "bmi(kg/m2)": 16.04
+    },
+    {
+        "age_under(month)": 108,
+        "weight(kg)": 26.93,
+        "height(cm)": 127.76,
+        "bmi(kg/m2)": 16.51
+    },
+    {
+        "age_under(month)": 120,
+        "weight(kg)": 30.52,
+        "height(cm)": 133.49,
+        "bmi(kg/m2)": 17.06
+    },
+    {
+        "age_under(month)": 132,
+        "weight(kg)": 34.69,
+        "height(cm)": 139.9,
+        "bmi(kg/m2)": 17.65
+    },
+    {
+        "age_under(month)": 144,
+        "weight(kg)": 39.24,
+        "height(cm)": 146.71,
+        "bmi(kg/m2)": 18.27
+    },
+    {
+        "age_under(month)": 156,
+        "weight(kg)": 43.79,
+        "height(cm)": 152.67,
+        "bmi(kg/m2)": 18.88
+    },
+    {
+        "age_under(month)": 168,
+        "weight(kg)": 47.84,
+        "height(cm)": 156.6,
+        "bmi(kg/m2)": 19.45
+    },
+    {
+        "age_under(month)": 180,
+        "weight(kg)": 50.93,
+        "height(cm)": 158.52,
+        "bmi(kg/m2)": 19.97
+    },
+    {
+        "age_under(month)": 192,
+        "weight(kg)": 52.82,
+        "height(cm)": 159.42,
+        "bmi(kg/m2)": 20.42
+    },
+    {
+        "age_under(month)": 204,
+        "weight(kg)": 53.64,
+        "height(cm)": 159.98,
+        "bmi(kg/m2)": 20.77
+    },
+    {
+        "age_under(month)": 216,
+        "weight(kg)": 53.87,
+        "height(cm)": 160.42,
+        "bmi(kg/m2)": 21.01
+    },
+    {
+        "age_under(month)": 228,
+        "weight(kg)": 54.12,
+        "height(cm)": 160.74,
+        "bmi(kg/m2)": 21.13
+    }
+  ]
+}
