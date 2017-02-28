@@ -10,7 +10,7 @@ export const MediaFiles = new FilesCollection({
   // parentDirPermissions: 777,
   // public: true,
   // downloadRoute: '/uploads/',
-  storagePath: '/data/golgoruPlan/uploads/',
+  storagePath: '/data/golgoluplan/uploads/',
   allowClientCode: true, // Disallow remove files from client
   onBeforeUpload(file) {
     // Allow upload files under 100MB, and only in png/jpg/jpeg formats

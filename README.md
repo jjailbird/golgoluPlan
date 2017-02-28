@@ -1,1 +1,1 @@
-# golgoruPlan
+# golgoluPlan
