@@ -82,11 +82,11 @@ class HomeLogin extends React.PureComponent {
           <tbody>
             <tr>
               <td>
-                <img alt="logo" width="70" src="/img/home.login.logo.png" />
+                <img alt="logo" width="50" src="/img/home.login.logo.png" />
                 <h1
                   style={{ color: '#fff' }}
                 >
-                  골고루<span style={{ fontWeight: 'normal', marginBottom: '5px' }}>플랜</span>
+                  골고루<span style={{ fontWeight: 'normal', marginBottom: '0px' }}>플랜</span>
                 </h1>
                 <h6 style={{ color: '#fff', top: '-20px' }}>
                   Eat well live healthy
