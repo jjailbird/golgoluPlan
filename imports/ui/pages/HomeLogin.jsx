@@ -73,8 +73,9 @@ class HomeLogin extends React.PureComponent {
         className="full-area"
         style={{
           backgroundImage: 'url("/img/home.login.background.mini.jpg")',
-          backgroundRepeat: 'no-repeat',
+          // backgroundRepeat: 'no-repeat',
           backgroundPosition: 'center center',
+          backgroundSize: 'cover',
         }}
       >
         <Title render={(previousTitle) => `${pageTitle} - ${previousTitle}`} />
@@ -82,7 +83,7 @@ class HomeLogin extends React.PureComponent {
           <tbody>
             <tr>
               <td>
-                <img alt="logo" width="35" src="/img/home.login.logo.png" />
+                <img alt="logo" width="50" src="/img/home.login.logo.png" />
                 <h1
                   style={{ color: '#fff' }}
                 >
