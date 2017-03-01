@@ -82,7 +82,7 @@ class HomeLogin extends React.PureComponent {
           <tbody>
             <tr>
               <td>
-                <img alt="logo" width="50" src="/img/home.login.logo.png" />
+                <img alt="logo" width="35" src="/img/home.login.logo.png" />
                 <h1
                   style={{ color: '#fff' }}
                 >
