@@ -76,7 +76,7 @@ class HomeLogin extends React.PureComponent {
           // backgroundRepeat: 'no-repeat',
           backgroundPosition: 'center center',
           backgroundSize: 'cover',
-          overflow: 'hidden',
+          overflow: 'auto',
         }}
       >
         <Title render={(previousTitle) => `${pageTitle} - ${previousTitle}`} />
