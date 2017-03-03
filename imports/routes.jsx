@@ -1,3 +1,4 @@
+import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 
@@ -35,23 +36,33 @@ export const renderRoutes = () => (
   </Router>
 );
 */
+const requireAuth = (nextState, replace) => {
+  if (!Meteor.loggingIn() && !Meteor.userId()) {
+    replace({
+      pathname: '/homelogin',
+      state: { nextPathname: nextState.location.pathname },
+    });
+  }
+};
+
 export const renderRoutes = () => (
   <Provider store={stores}>
     <Router history={browserHistory}>
       <Route path="/" component={AppContainer}>
-        <IndexRoute component={HomeLogin} />
-        <Route path="home" component={HomePage} />
+        <IndexRoute component={CounselHome} onEnter={requireAuth} />
+        <Route path="home" component={HomePage} onEnter={requireAuth} />
         <Route path="homelogin" component={HomeLogin} />
         <Route path="homeregister" component={HomeRegister} />
-        <Route path="counsel/home" component={CounselHome} />
-        <Route path="counsel/steps(/:familyId)(/:pubDate)" component={CounselSteps} />
-        <Route path="counsel/step/01" component={BmiInputPage} />
-        <Route path="counsel/step/02" component={EhdInputPage} />
-        <Route path="counsel/bmi/report(/:familyId)(/:pubDate)" component={BmiReportPage} />
+        <Route path="counsel/home" component={CounselHome} onEnter={requireAuth} />
+        <Route path="counsel/steps(/:familyId)(/:pubDate)" component={CounselSteps} onEnter={requireAuth} />
+        <Route path="counsel/step/01" component={BmiInputPage} onEnter={requireAuth} />
+        <Route path="counsel/step/02" component={EhdInputPage} onEnter={requireAuth} />
+        <Route path="counsel/bmi/input" component={BmiInputPage} onEnter={requireAuth} />
+        <Route path="counsel/bmi/report(/:familyId)(/:pubDate)" component={BmiReportPage} onEnter={requireAuth} />
         <Route path="upload" component={UploadPage} />
         <Route path="signin" component={SignIn} />
         <Route path="signup" component={SignUp} />
-        <Route path="familylist" component={FamilyList} />
+        <Route path="familylist" component={FamilyList} onEnter={requireAuth} />
       </Route>
     </Router>
   </Provider>

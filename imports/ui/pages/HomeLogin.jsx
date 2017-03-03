@@ -51,7 +51,7 @@ class HomeLogin extends React.PureComponent {
         const { dispatch } = this.props;
         dispatch(signin(Meteor.user()));
 
-        browserHistory.push('/home');
+        browserHistory.push('/');
         // this.context.router.push('/');
       }
     });

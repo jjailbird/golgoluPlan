@@ -5,6 +5,7 @@ import Paper from 'material-ui/Paper';
 import FontIcon from 'material-ui/FontIcon';
 import { green500, green900 } from 'material-ui/styles/colors';
 import StandardGrowthChart from './StandardGrowthChart.jsx';
+import { getBmiPoint, getBmiDescription } from '../functions/bmiFunctions.js';
 
 class BmiReport extends React.Component {
   constructor(props) {
@@ -30,19 +31,12 @@ class BmiReport extends React.Component {
     );
   }
   render() {
-    const stDataMale = this.state.chartData1;
-    const stDataFemale = this.state.chartData2;
+    // const stDataMale = this.state.chartData1;
+    // const stDataFemale = this.state.chartData2;
     const { name, sex, publishedAt, birthDate, height, weight } = this.props;
 
-    const bmiPoint = height && weight ? weight / (height / 100 * height / 100) : 0;
-    let bmiDesc = '';
-    if (bmiPoint < 18.5) {
-      bmiDesc = '심한 저체중';
-    } else if (bmiPoint > 18.5 && bmiPoint < 25) {
-      bmiDesc = '정상';
-    } else if (bmiPoint > 25) {
-      bmiDesc = '과체중';
-    }
+    const bmiPoint = getBmiPoint(weight, height);
+    const bmiDesc = getBmiDescription(bmiPoint);
     return (
       <div>
         <Paper
@@ -106,13 +100,9 @@ class BmiReport extends React.Component {
                 </td>
                 <td style={{ padding: '10px', textAlign: 'right' }}>
                   <div
+                    className="bmi-desc-badge"
                     style={{
-                      backgroundColor: green900,
-                      borderRadius: '20px',
-                      color: '#fff',
-                      padding: '6px 12px',
                       fontSize: '14px',
-                      fontWeight: 'normal',
                       marginBottom: '10px',
                     }}
                   >

@@ -89,7 +89,7 @@ class CounselSteps extends trackerReact(React.Component) {
         {family ?
           <StepDisplayDone
             step="01"
-            linkUrl="/counsel/step/01"
+            linkUrl={`/counsel/bmi/report/${family._id}/${profile.bmiPubDate}`}
             profile={profile}
           />
           :

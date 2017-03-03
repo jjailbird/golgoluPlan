@@ -23,6 +23,7 @@ import { connect } from 'react-redux';
 import { setPageTitle } from '../../../redux/actions/setPageTitle.js';
 
 import BmiReport from './components/BmiReport.jsx';
+
 // import FamilyProfile from './components/FamilyProfile.jsx';
 
 const pageTitle = '성장리포트';

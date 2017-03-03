@@ -5,7 +5,7 @@ import Title from 'react-title-component';
 import { connect } from 'react-redux';
 import { setPageTitle } from '../../redux/actions/setPageTitle.js';
 
-const pageTitle = 'HOME';
+const pageTitle = '골고루플랜';
 
 class HomePage extends React.PureComponent {
   componentWillMount() {

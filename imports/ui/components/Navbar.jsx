@@ -38,7 +38,7 @@ const naviItems = [
   { title: 'HOME', route: '/home' },
   {
     title: '골고루플랜',
-    route: '/counsel/steps',
+    route: '/counsel/home',
     children: [
       { title: '', route: '/counsel/step/01' },
     ],
@@ -178,7 +178,7 @@ class Navbar extends Component {
               title={naviTitle}
               titleStyle={{ cursor: 'pointer' }}
               showMenuIconButton={false}
-              onTitleTouchTap={() => { browserHistory.push('/'); }}
+              // onTitleTouchTap={() => { browserHistory.push('/'); }}
             >
               <Toolbar style={styles.toolbar}>
                 <ToolbarGroup>
@@ -207,7 +207,7 @@ class Navbar extends Component {
               iconElementRight={
                 <IconButton onTouchTap={this.onAppMenuTouch}><MenuIcon /></IconButton>
               }
-              onTitleTouchTap={() => { browserHistory.push('/'); }}
+              // onTitleTouchTap={() => { browserHistory.push('/'); }}
             />
             <Drawer
               width={200}

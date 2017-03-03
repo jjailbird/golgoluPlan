@@ -9,6 +9,7 @@ import Avatar from 'material-ui/Avatar';
 import { green900, green500, amber500 } from 'material-ui/styles/colors';
 
 import { browserHistory } from 'react-router';
+import { getBmiPoint, getBmiDescription } from '../functions/bmiFunctions.js';
 
 const style = {
   step: {
@@ -23,15 +24,8 @@ class StepDisplayDone extends React.PureComponent {
     let bmiPoint = 0;
     let bmiDesc = '';
     if (profile) {
-      bmiPoint = profile.height && profile.weight ?
-            profile.weight / (profile.height / 100 * profile.height / 100) : 0;
-      if (bmiPoint < 18.5) {
-        bmiDesc = '심한 저체중';
-      } else if (bmiPoint > 18.5 && bmiPoint < 25) {
-        bmiDesc = '정상';
-      } else if (bmiPoint > 25) {
-        bmiDesc = '과체중';
-      }
+      bmiPoint = getBmiPoint(profile.weight, profile.height);
+      bmiDesc = getBmiDescription(bmiPoint);
     }
 
     return (
@@ -112,16 +106,7 @@ class StepDisplayDone extends React.PureComponent {
                                   cm
                                 </span>
                               </div>
-                              <div
-                                style={{
-                                  backgroundColor: green900,
-                                  borderRadius: '20px',
-                                  color: '#fff',
-                                  padding: '6px 12px',
-                                  fontSize: '12px',
-                                  fontWeight: 'normal',
-                                }}
-                              >
+                              <div className="bmi-desc-badge">
                                 {bmiPoint.toFixed(1)} / {bmiDesc}
                               </div>
                             </td>
