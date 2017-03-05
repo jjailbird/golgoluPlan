@@ -11,20 +11,27 @@ import {
 } from 'material-ui/Stepper';
 import Paper from 'material-ui/Paper';
 import { green500 } from 'material-ui/styles/colors';
-
+import RaisedButton from 'material-ui/RaisedButton';
+import IconArrowNext from 'material-ui/svg-icons/hardware/keyboard-arrow-right';
+import IconArrowPrev from 'material-ui/svg-icons/hardware/keyboard-arrow-left';
 // import Pagination from 'material-ui-pagination';
-import Pagination from '../../components/Pagination.jsx';
-
+// import Pagination from '../../components/Pagination.jsx';
+import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { setPageTitle } from '../../../redux/actions/setPageTitle.js';
+import { setQuestionSelect, setAnswerSelect } from '../../../redux/actions/ehdQuestionSelect.js';
 
 import AnswerCheckButtonGroup from './components/ehd/AnswerCheckButtonGroup.jsx';
 import ehData from './data/eatingHabitQuestions';
 
 const ehGroups = ehData.groups;
 const ehQuestions = ehData.questions;
+const ehQuestionCount = ehQuestions.groupAll.length;
 
-const testEhData = [];
+const ehDataUserAnswers = new Array(ehQuestionCount);
+const ehDataUserPoints = new Array(ehQuestionCount);
+ehDataUserAnswers.fill(0);
+ehDataUserPoints.fill(0);
 
 const pageTitle = '식생활 진단 테스트';
 class EhdInputPage extends trackerReact(React.Component) {
@@ -32,44 +39,51 @@ class EhdInputPage extends trackerReact(React.Component) {
     super(props);
     this.familyId = this.props.params.familyId;
     this.state = {
-      question_no: 1,
-      question_group: 1,
-      question: ehQuestions.group01[0].question,
-      question_numbering: 'Q1',
-      answer_number: -1,
       subscription: {
         userFamilies: Meteor.subscribe('userfamilies.private'),
       },
     };
-    this.onPageChange = this.onPageChange.bind(this);
+    this.onQuestionChange = this.onQuestionChange.bind(this);
+    this.onAnswerChange = this.onAnswerChange.bind(this);
   }
   componentWillMount() {
-    // console.log('componentWillMount: load ehd_questions');
     const { dispatch } = this.props;
     dispatch(setPageTitle(pageTitle));
+    dispatch(setQuestionSelect(ehQuestions.groupAll[0]));
   }
   componentDidMount() {
     // console.log('componentDidMount');
   }
   componentWillUnmount() {
-    // console.log('componentWillUnmount');
     this.state.subscription.userFamilies.stop();
   }
-  // onBmiPubDateChange(e, idx, value) {
   userFamily(familyId) {
     return UserFamily.findOne({ _id: familyId });
   }
-  onPageChange(value) {
-    this.setState({
-      question_no: value,
-      question_numbering: `Q${value}`,
-      question: ehQuestions.group01[value - 1].question,
-      answer_number: -1,
-    });
+  onQuestionChange(value) {
+    const { dispatch } = this.props;
+    dispatch(setQuestionSelect(ehQuestions.groupAll[value - 1]));
+  }
+  onAnswerChange(value) {
+    const { dispatch, question } = this.props;
+    // dispatch(setAnswerSelect(value));
+    ehDataUserAnswers[question.no - 1] = value;
   }
   render() {
     const stepIndex = 1;
-    // const family = this.userFamily(this.familyId);
+    const { question } = this.props;
+    let questionNo = 1;
+    let questionNumber = '';
+    let questionString = '';
+    let selectedAnswer = 0;
+    if (question) {
+      questionNo = question.no;
+      questionNumber = `Q${question.no}`;
+      questionString = question.question;
+      selectedAnswer = ehDataUserAnswers[questionNo - 1];
+    }
+    // console.log('question', question);
+    console.log('ehDataUserAnswers', ehDataUserAnswers);
     return (
       <div className="root content-center">
         <Title render={(previousTitle) => `${pageTitle} - ${previousTitle}`} />
@@ -100,21 +114,58 @@ class EhdInputPage extends trackerReact(React.Component) {
             <tbody>
               <tr>
                 <td>
-                  <h1 style={{ color: green500 }}>{this.state.question_numbering}</h1>
+                  <h1
+                    style={{ color: green500 }}
+                  >
+                    {questionNumber}
+                    <span style={{ fontSize: '14px' }}>
+                      / {ehQuestionCount}
+                    </span>
+                  </h1>
                 </td>
-                <td>{this.state.question}</td>
+                <td>{questionString}</td>
               </tr>
             </tbody>
           </table>
         </Paper>
-        <AnswerCheckButtonGroup selectIndex={this.state.answer_number} />
-        <Pagination
-          className="ehd-paging"
-          total={9}
-          current={this.state.question_no}
-          display={9}
-          onChange={no => this.onPageChange(no)}
+        <div><h6>{ehDataUserAnswers[questionNo - 1]}</h6></div>
+        <AnswerCheckButtonGroup
+          selectIndex={selectedAnswer}
+          onChange={no => { this.onAnswerChange(no); }}
         />
+        <div className="ehd-question-navi">
+          {questionNo > 1 ?
+            <RaisedButton
+              className="ehd-question-navi-button"
+              label="이전문항"
+              labelPosition="after"
+              icon={<IconArrowPrev />}
+              onTouchTap={() => { this.onQuestionChange(questionNo - 1); }}
+              primary
+              style={{ float: 'left' }}
+            />
+          : null}
+          {questionNo < ehQuestionCount ?
+            <RaisedButton
+              className="ehd-question-navi-button"
+              label="다음문항"
+              labelPosition="before"
+              icon={<IconArrowNext />}
+              onTouchTap={() => { this.onQuestionChange(questionNo + 1); }}
+              primary
+              style={{ float: 'right' }}
+            />
+          : null}
+        </div>
+        {/*
+          <Pagination
+            className="ehd-paging"
+            total={9}
+            current={this.state.questionNo}
+            display={9}
+            onChange={no => this.onQuestionChange(no)}
+          />
+        */}
       </div>
     );
   }
@@ -123,12 +174,16 @@ class EhdInputPage extends trackerReact(React.Component) {
 EhdInputPage.propTypes = {
   dispatch: React.PropTypes.func,
   user: React.PropTypes.object,
+  question: React.PropTypes.object,
+  answer: React.PropTypes.number,
   params: React.PropTypes.object,
 };
 
 function mapStateToProps(state) {
   return {
     user: state.authenticate.user,
+    question: state.ehdQuestion.selectedQuestion,
+    answer: state.ehdQuestion.selectedAnswer,
   };
 }
 

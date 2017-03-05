@@ -244,3 +244,13 @@ div.bmi-desc-badge {
   font-size: 12px;
   font-weight: normal;
 }
+
+.ehd-question-navi {
+  padding: 10px 0px;
+}
+/*
+.ehd-question-navi .ehd-question-navi-button {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+*/

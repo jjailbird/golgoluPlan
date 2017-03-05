@@ -1,27 +1,45 @@
+import { observable, extendObservable } from 'mobx';
+import { observer } from 'mobx-react';
+
 import React from 'react';
 import FontIcon from 'material-ui/FontIcon';
 
+@observer
 class AnswerCheckButtonGroup extends React.Component {
-  constructor(props) {
-    super(props);
+  @observable selection = null;
+  constructor(props, context) {
+    super(props, context);
     this.onButtonClick = this.onButtonClick.bind(this);
+    this.selection = this.props.selectIndex;
+    /*
     this.state = {
-      checkedIndex: this.props.selectIndex,
+      checkedIndex: 0,
     };
+    */
   }
   componentWillReceiveProps() {
+    this.selection = this.props.selectIndex;
+    /*
     this.setState({
-      checkedIndex: this.props.selectIndex,
+      checkedIndex: this.selection,
     });
+    */
+    // alert(this.state.checkedIndex);
   }
+
   onButtonClick(e) {
     const objCheck = e.target.parentNode;
     const idxCheck = objCheck.dataset.idx;
+    this.props.onChange(Number(idxCheck));
     if (idxCheck) {
+      this.selection = Number(idxCheck);
+      /*
       this.setState({
         checkedIndex: Number(idxCheck),
       });
+      */
     }
+    console.log('this.selection', this.selection);
   }
   render() {
     const answers = [
@@ -32,9 +50,11 @@ class AnswerCheckButtonGroup extends React.Component {
       { idx: 5, numbering: 'e', desc: '매우 그렇다', point: 5 },
     ];
 
+    console.log('selection', this.selection);
+
     const answerWithStyles = answers.map((answer) => {
       const style = {};
-      if (answer.idx === this.state.checkedIndex) {
+      if (answer.idx === this.selection) {
         style.color = {
           color: '#fff',
           // backgroundColor: '#4ab046',
@@ -85,6 +105,7 @@ class AnswerCheckButtonGroup extends React.Component {
 
 AnswerCheckButtonGroup.propTypes = {
   selectIndex: React.PropTypes.number,
+  onChange: React.PropTypes.func,
 };
 
 export default AnswerCheckButtonGroup;

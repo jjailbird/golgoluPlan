@@ -24,7 +24,6 @@ import moment from 'moment';
 
 import { connect } from 'react-redux';
 import { setPageTitle } from '../../../redux/actions/setPageTitle.js';
-
 // import { UserFamily } from '../../../api/collections/UserFamily.js';
 import { MediaFiles } from '../../../api/collections/MediaFiles.js';
 import { browserHistory } from 'react-router';

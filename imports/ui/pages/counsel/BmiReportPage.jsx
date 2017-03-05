@@ -15,12 +15,15 @@ import FontIcon from 'material-ui/FontIcon';
 import Paper from 'material-ui/Paper';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import IconAdd from 'material-ui/svg-icons/content/add';
+import RaisedButton from 'material-ui/RaisedButton';
+import IconArrowRight from 'material-ui/svg-icons/action/trending-flat';
 import { green500 } from 'material-ui/styles/colors';
 
 import moment from 'moment';
 
 import { connect } from 'react-redux';
 import { setPageTitle } from '../../../redux/actions/setPageTitle.js';
+import { browserHistory } from 'react-router';
 
 import BmiReport from './components/BmiReport.jsx';
 
@@ -167,7 +170,7 @@ class BmiReportPage extends trackerReact(React.Component) {
                   </select>
                 </td>
                 <td>
-                  <FloatingActionButton>
+                  <FloatingActionButton className="btn-input-bmi">
                     <IconAdd />
                   </FloatingActionButton>
                 </td>
@@ -175,7 +178,6 @@ class BmiReportPage extends trackerReact(React.Component) {
             </tbody>
           </table>
         </Paper>
-
         <BmiReport
           name={profile.name}
           sex={profile.sex}
@@ -184,6 +186,17 @@ class BmiReportPage extends trackerReact(React.Component) {
           publishedAt={popBmi.publishedAt}
           birthDate={profile.birthDate}
         />
+
+        <Paper zDepth={0}>
+          <RaisedButton
+            label="STEP02 다음단계"
+            labelPosition="before"
+            icon={<IconArrowRight />}
+            onTouchTap={() => { browserHistory.push(`/counsel/steps/${this.familyId}`); }}
+            primary
+            fullWidth
+          />
+        </Paper>
 
       </div>
     );
