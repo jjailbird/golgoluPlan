@@ -63,10 +63,11 @@ class EhdInputPage extends trackerReact(React.Component) {
   onQuestionChange(value) {
     const { dispatch } = this.props;
     dispatch(setQuestionSelect(ehQuestions.groupAll[value - 1]));
+    dispatch(setAnswerSelect(ehDataUserAnswers[value - 1]));
   }
   onAnswerChange(value) {
     const { dispatch, question } = this.props;
-    // dispatch(setAnswerSelect(value));
+    dispatch(setAnswerSelect(value));
     ehDataUserAnswers[question.no - 1] = value;
   }
   render() {
@@ -75,15 +76,13 @@ class EhdInputPage extends trackerReact(React.Component) {
     let questionNo = 1;
     let questionNumber = '';
     let questionString = '';
-    let selectedAnswer = 0;
     if (question) {
       questionNo = question.no;
       questionNumber = `Q${question.no}`;
       questionString = question.question;
-      selectedAnswer = ehDataUserAnswers[questionNo - 1];
     }
     // console.log('question', question);
-    console.log('ehDataUserAnswers', ehDataUserAnswers);
+    // console.log('ehDataUserAnswers', ehDataUserAnswers);
     return (
       <div className="root content-center">
         <Title render={(previousTitle) => `${pageTitle} - ${previousTitle}`} />
@@ -130,7 +129,6 @@ class EhdInputPage extends trackerReact(React.Component) {
         </Paper>
         <div><h6>{ehDataUserAnswers[questionNo - 1]}</h6></div>
         <AnswerCheckButtonGroup
-          selectIndex={selectedAnswer}
           onChange={no => { this.onAnswerChange(no); }}
         />
         <div className="ehd-question-navi">

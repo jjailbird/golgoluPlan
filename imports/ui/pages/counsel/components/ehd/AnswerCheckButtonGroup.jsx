@@ -1,45 +1,18 @@
-import { observable, extendObservable } from 'mobx';
-import { observer } from 'mobx-react';
-
 import React from 'react';
 import FontIcon from 'material-ui/FontIcon';
+import { connect } from 'react-redux';
+import { setQuestionSelect, setAnswerSelect }
+  from '../../../../../redux/actions/ehdQuestionSelect.js';
 
-@observer
 class AnswerCheckButtonGroup extends React.Component {
-  @observable selection = null;
-  constructor(props, context) {
-    super(props, context);
+  constructor(props) {
+    super(props);
     this.onButtonClick = this.onButtonClick.bind(this);
-    this.selection = this.props.selectIndex;
-    /*
-    this.state = {
-      checkedIndex: 0,
-    };
-    */
   }
-  componentWillReceiveProps() {
-    this.selection = this.props.selectIndex;
-    /*
-    this.setState({
-      checkedIndex: this.selection,
-    });
-    */
-    // alert(this.state.checkedIndex);
-  }
-
   onButtonClick(e) {
     const objCheck = e.target.parentNode;
     const idxCheck = objCheck.dataset.idx;
     this.props.onChange(Number(idxCheck));
-    if (idxCheck) {
-      this.selection = Number(idxCheck);
-      /*
-      this.setState({
-        checkedIndex: Number(idxCheck),
-      });
-      */
-    }
-    console.log('this.selection', this.selection);
   }
   render() {
     const answers = [
@@ -50,11 +23,10 @@ class AnswerCheckButtonGroup extends React.Component {
       { idx: 5, numbering: 'e', desc: '매우 그렇다', point: 5 },
     ];
 
-    console.log('selection', this.selection);
-
+    const selectedIndex = this.props.answer;
     const answerWithStyles = answers.map((answer) => {
       const style = {};
-      if (answer.idx === this.selection) {
+      if (answer.idx === selectedIndex) {
         style.color = {
           color: '#fff',
           // backgroundColor: '#4ab046',
@@ -78,7 +50,7 @@ class AnswerCheckButtonGroup extends React.Component {
           answerWithStyles.map((answer) => (
             <div className="ehdAnswerRow" key={answer.idx} data-idx={answer.idx}>
               <div
-                className="ehdAnswer-check-button"
+                className={answer.idx === selectedIndex ? 'ehdAnswer-check-button selected' : 'ehdAnswer-check-button'}
                 data-idx={answer.idx}
                 data-point={answer.point}
                 onTouchTap={this.onButtonClick}
@@ -104,8 +76,18 @@ class AnswerCheckButtonGroup extends React.Component {
 }
 
 AnswerCheckButtonGroup.propTypes = {
-  selectIndex: React.PropTypes.number,
+  dispatch: React.PropTypes.func,
+  answer: React.PropTypes.number,
   onChange: React.PropTypes.func,
 };
 
-export default AnswerCheckButtonGroup;
+function mapStateToProps(state) {
+  return {
+    // user: state.authenticate.user,
+    dispatch: React.PropTypes.func,
+    question: state.ehdQuestion.selectedQuestion,
+    answer: state.ehdQuestion.selectedAnswer,
+  };
+}
+export default connect(mapStateToProps)(AnswerCheckButtonGroup);
+

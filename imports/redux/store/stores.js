@@ -13,8 +13,8 @@ const enhancers = [
   DevTools.instrument(),
 ];
 
-// const stores = createStore(reducers, {}, compose(...enhancers));
-const stores = createStore(reducers);
+const stores = createStore(reducers, {}, compose(...enhancers));
+// const stores = createStore(reducers);
 
 Meteor.autorun(() => {
   const meteorUser = Meteor.user();
