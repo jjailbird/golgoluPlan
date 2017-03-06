@@ -1,12 +1,12 @@
 const eatingHabitQuestions = {
   description: '식습관 테스트 문항 2017-02-10',
   groups: [
-    { group01: '골고루먹기' },
-    { group02: '걸식' },
-    { group03: '고지방,고열량,당류' },
-    { group04: '나트륨' },
-    { group05: '식사조절' },
-    { group06: '신체활동' },
+    { no: 1, name: '골고루먹기', numbers: [1, 2, 3, 4, 5, 6, 7, 8, 9] },
+    { no: 2, name: '걸식', numbers: [10, 11, 12, 13] },
+    { no: 3, name: '고지방,고열량,당류', numbers: [14, 15, 16, 17, 18, 19] },
+    { no: 4, name: '나트륨', numbers: [20, 21, 22, 23] },
+    { no: 5, name: '식사조절', numbers: [24, 25, 26, 27, 28, 29, 30, 31] },
+    { no: 6, name: '신체활동', numbers: [32, 33, 34] },
   ],
   questions: {
     groupAll: [

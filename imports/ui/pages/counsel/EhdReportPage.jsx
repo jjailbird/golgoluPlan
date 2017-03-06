@@ -31,11 +31,10 @@ const ehQuestionCount = ehQuestions.groupAll.length;
 
 const ehDataUserAnswers = new Array(ehQuestionCount);
 const ehDataUserPoints = new Array(ehQuestionCount);
-ehDataUserAnswers.fill(0);
-ehDataUserPoints.fill(0);
+
 
 const pageTitle = '식생활 진단 테스트';
-class EhdInputPage extends trackerReact(React.Component) {
+class EhdReportPage extends trackerReact(React.Component) {
   constructor(props) {
     super(props);
     this.familyId = this.props.params.familyId;
@@ -46,9 +45,12 @@ class EhdInputPage extends trackerReact(React.Component) {
     };
     this.onQuestionChange = this.onQuestionChange.bind(this);
     this.onAnswerChange = this.onAnswerChange.bind(this);
-    this.onConfirmGotoResult = this.onConfirmGotoResult.bind(this);
+    this.onConfirmSaveResult = this.onConfirmSaveResult.bind(this);
   }
   componentWillMount() {
+    ehDataUserAnswers.fill(0);
+    ehDataUserPoints.fill(0);
+
     const { dispatch } = this.props;
     dispatch(setPageTitle(pageTitle));
     dispatch(setQuestionSelect(ehQuestions.groupAll[0]));
@@ -74,11 +76,11 @@ class EhdInputPage extends trackerReact(React.Component) {
     ehDataUserAnswers[questionIdx] = value;
     ehDataUserPoints[questionIdx] = question.points[value - 1];
   }
-  onConfirmGotoResult() {
+  onConfirmSaveResult() {
     const unansweredIdx = ehDataUserAnswers.findIndex((answer) => answer === 0);
     console.log('unansweredIdx', unansweredIdx);
 
-    if (unansweredIdx > -1) {
+    if (unansweredIdx) {
       confirm('응답하시지 않은 질문이 있습니다, 해당 문제로 이동하시겠습니까?').then(() => {
         const { dispatch } = this.props;
         dispatch(setQuestionSelect(ehQuestions.groupAll[unansweredIdx]));
@@ -176,13 +178,13 @@ class EhdInputPage extends trackerReact(React.Component) {
               style={{ float: 'right' }}
             />
           : null}
-          {questionNo === ehQuestionCount && this.props.answer ?
+          {questionNo === ehQuestionCount && this.props.answer > 0 ?
             <RaisedButton
               className="ehd-question-navi-button"
               label="결과보기"
               labelPosition="before"
               icon={<IconArrowNext />}
-              onTouchTap={this.onConfirmGotoResult}
+              onTouchTap={this.onConfirmSaveResult}
               style={{ float: 'right' }}
               labelColor="#fff"
               backgroundColor="#fd4080"
@@ -203,7 +205,7 @@ class EhdInputPage extends trackerReact(React.Component) {
   }
 }
 
-EhdInputPage.propTypes = {
+EhdReportPage.propTypes = {
   dispatch: React.PropTypes.func,
   user: React.PropTypes.object,
   question: React.PropTypes.object,
@@ -219,6 +221,6 @@ function mapStateToProps(state) {
   };
 }
 
-// export default connect(mapStateToProps)(EhdInputPage);
-export default connect(mapStateToProps)(EhdInputPage);
+// export default connect(mapStateToProps)(EhdReportPage);
+export default connect(mapStateToProps)(EhdReportPage);
 

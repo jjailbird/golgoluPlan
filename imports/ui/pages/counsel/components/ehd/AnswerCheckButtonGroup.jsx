@@ -1,8 +1,6 @@
 import React from 'react';
 import FontIcon from 'material-ui/FontIcon';
 import { connect } from 'react-redux';
-import { setQuestionSelect, setAnswerSelect }
-  from '../../../../../redux/actions/ehdQuestionSelect.js';
 
 class AnswerCheckButtonGroup extends React.Component {
   constructor(props) {
@@ -76,7 +74,7 @@ class AnswerCheckButtonGroup extends React.Component {
 }
 
 AnswerCheckButtonGroup.propTypes = {
-  dispatch: React.PropTypes.func,
+  // dispatch: React.PropTypes.func,
   answer: React.PropTypes.number,
   onChange: React.PropTypes.func,
 };
@@ -84,7 +82,7 @@ AnswerCheckButtonGroup.propTypes = {
 function mapStateToProps(state) {
   return {
     // user: state.authenticate.user,
-    dispatch: React.PropTypes.func,
+    // dispatch: React.PropTypes.func,
     question: state.ehdQuestion.selectedQuestion,
     answer: state.ehdQuestion.selectedAnswer,
   };
