@@ -6,7 +6,7 @@ import { UserEhData } from '../../collections/UserEhData.js';
 if (Meteor.isServer) {
   // arrow function does not bind its own this, arguments, super, or new.target.
   // ref: http://stackoverflow.com/questions/27991128/this-userid-returns-undefined-inside-meteor-publish
-  Meteor.publish('userfamilies.private', function () {
+  Meteor.publish('userehdata.private', function () {
     return UserEhData.find({ userId: this.userId });
   });
   Meteor.methods({
@@ -61,23 +61,4 @@ if (Meteor.isServer) {
       */
     },
   });
-  /*
-  UserFamily.extend({
-    meteorMethods: {
-      insertFirst(data) {
-        this.userId = data.userId;
-        this.name = data.name;
-        this.sex = data.sex;
-        this.birthDate = data.birthDate;
-        this.bmiData = [{
-          publishedAt: new Date(),
-          height: parseFloat(data.height),
-          weight: parseFloat(data.weight),
-        }];
-        this.publishedAt = new Date();
-        this.save();
-      },
-    },
-  });
-  */
 }
