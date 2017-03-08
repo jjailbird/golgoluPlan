@@ -10,55 +10,23 @@ if (Meteor.isServer) {
     return UserEhData.find({ userId: this.userId });
   });
   Meteor.methods({
-    'UserEhData.insertNew'(data) {
+    'UserEhData.insert'(data) {
       check(data, Object);
       const findKey = {
         userId: data.userId,
         familyId: data.familyId,
       };
       const existEhData = UserEhData.findOne(findKey);
-      const inputData = {};
       if (!existEhData) {
-        inputData.userId = data.userId;
-        inputData.familyId = data.familyId;
-        inputData.answers = [{
-          group_no: data.group_no,
-          group_answers: new Array(data.group_length),
-        }];
-      }
-      /*
-      if (existEhData) {
+        UserEhData.insert(data);
+      } else {
         UserEhData.update(findKey, {
           $set: {
-            birthDate: data.birthDate,
-            sex: data.sex,
+            ehDataUserAnswers: data.ehDataUserAnswers,
+            ehDataUserPoints: data.ehDataUserPoints,
           },
         });
-        const findElem = {
-          bmiData: { $elemMatch: { publishedAt: data.bmiData[0].publishedAt } },
-        };
-        const existBmi = UserEhData.findOne(
-          Object.assign({}, findKey, findElem)
-        );
-        if (existBmi) {
-          const findBmi = {
-            'bmiData.publishedAt': data.bmiData[0].publishedAt,
-          };
-          UserEhData.update(Object.assign({}, findKey, findBmi), {
-            $set: {
-              'bmiData.$.height': data.bmiData[0].height,
-              'bmiData.$.weight': data.bmiData[0].weight,
-            },
-          });
-        } else {
-          UserEhData.update(findKey, {
-            $push: { bmiData: data.bmiData[0] },
-          });
-        }
-        return { execute: 'update', id: existEhData._id };
       }
-      return { execute: 'insert', id: UserEhData.insert(data) };
-      */
     },
   });
 }

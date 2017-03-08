@@ -18,6 +18,7 @@ const stores = createStore(reducers);
 
 Meteor.autorun(() => {
   const meteorUser = Meteor.user();
+  // console.log('stores.meteorUser', meteorUser);
   if (meteorUser) {
     stores.dispatch({ type: 'SIGNIN', user: meteorUser });
   } else {

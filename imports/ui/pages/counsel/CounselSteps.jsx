@@ -104,13 +104,13 @@ class CounselSteps extends trackerReact(React.Component) {
           step="02"
           description="식생활 진단 테스트"
           icon="icon-notes"
-          linkUrl="/counsel/step/02"
+          linkUrl={`/counsel/step/02/${this.familyId}`}
         />
         <StepDisplay
           step="03"
           description="24시간 식사 기록"
           icon="icon-tableware"
-          linkUrl="/counsel/step/02"
+          linkUrl={`/counsel/step/03/${this.familyId}`}
         />
       </div>
     );

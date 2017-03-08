@@ -17,7 +17,7 @@ import IconArrowPrev from 'material-ui/svg-icons/hardware/keyboard-arrow-left';
 // import Dialog from 'material-ui/Dialog';
 import confirm from '../../../utils/confirm/confirm.js';
 
-// import { browserHistory } from 'react-router';
+import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { setPageTitle } from '../../../redux/actions/setPageTitle.js';
 import { setQuestionSelect, setAnswerSelect } from '../../../redux/actions/ehdQuestionSelect.js';
@@ -31,14 +31,14 @@ const ehQuestionCount = ehQuestions.groupAll.length;
 
 const ehDataUserAnswers = new Array(ehQuestionCount);
 const ehDataUserPoints = new Array(ehQuestionCount);
-ehDataUserAnswers.fill(0);
-ehDataUserPoints.fill(0);
 
 const pageTitle = '식생활 진단 테스트';
 class EhdInputPage extends trackerReact(React.Component) {
   constructor(props) {
     super(props);
     this.familyId = this.props.params.familyId;
+    this.userId = this.props.user ? this.props.user._id : null;
+    // console.log('this.props.user', this.props.user);
     this.state = {
       subscription: {
         userFamilies: Meteor.subscribe('userfamilies.private'),
@@ -49,6 +49,11 @@ class EhdInputPage extends trackerReact(React.Component) {
     this.onConfirmGotoResult = this.onConfirmGotoResult.bind(this);
   }
   componentWillMount() {
+    ehDataUserAnswers.fill(0);
+    ehDataUserPoints.fill(0);
+
+    console.log('ehDataInit', ehDataUserAnswers, ehDataUserPoints);
+
     const { dispatch } = this.props;
     dispatch(setPageTitle(pageTitle));
     dispatch(setQuestionSelect(ehQuestions.groupAll[0]));
@@ -87,7 +92,25 @@ class EhdInputPage extends trackerReact(React.Component) {
       });
     } else {
       confirm('모든 답변을 저장하시고 결과 페이지로 이동하시겠습니까?').then(() => {
-        console.log('ehDataUserAnswers', ehDataUserAnswers, ehDataUserPoints);
+        if (!this.userId) {
+          this.userId = Meteor.userId();
+        }
+        const data = {
+          userId: this.userId,
+          familyId: this.familyId,
+          ehDataUserAnswers,
+          ehDataUserPoints,
+        };
+
+        // console.log('insert data:', data);
+        Meteor.call('UserEhData.insert', data, (err, res) => {
+          if (err) {
+            console.log('Meteor.call error', err);
+            alert(err);
+          } else {
+            browserHistory.push(`/counsel/ehd/report/${this.familyId}`);
+          }
+        });
       }, () => {
       });
     }
