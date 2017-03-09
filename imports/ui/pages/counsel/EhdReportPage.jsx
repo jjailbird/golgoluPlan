@@ -120,7 +120,6 @@ class EhdReportPage extends trackerReact(React.Component) {
 
       return data;
     });
-    console.log('series', series);
     const option = {
       title: {
         text: '문항 그룹별 평균',
