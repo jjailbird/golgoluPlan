@@ -10,6 +10,8 @@ import {
   StepButton,
 } from 'material-ui/Stepper';
 import Paper from 'material-ui/Paper';
+import ReactEcharts from 'echarts-for-react';
+
 import { green500 } from 'material-ui/styles/colors';
 import RaisedButton from 'material-ui/RaisedButton';
 import IconArrowNext from 'material-ui/svg-icons/hardware/keyboard-arrow-right';
@@ -38,6 +40,116 @@ class EhdReportPage extends trackerReact(React.Component) {
       },
     };
   }
+  getChartOption(familyEhDataPoints) {
+    // if (!familyEhDataPoints) return null;
+
+    const labelFromatter = {
+      normal: {
+        label: {
+          formatter(params) {
+            return params.data.point ? params.data.point : params.value; // `${100 - params.value}%`;
+          },
+          textStyle: {
+            baseline: 'top',
+          },
+        },
+      },
+    };
+    const labelTop = {
+      normal: {
+        label: {
+          show: true,
+          position: 'center',
+          formatter: '{b}',
+          textStyle: {
+            baseline: 'bottom',
+          },
+        },
+        labelLine: {
+          show: false,
+        },
+      },
+    };
+    const labelBottom = {
+      normal: {
+        color: '#ccc',
+        label: {
+          show: true,
+          position: 'center',
+        },
+        labelLine: {
+          show: false,
+        },
+      },
+      emphasis: {
+        color: 'rgba(0,0,0,0)',
+      },
+    };
+    const radius = [50, 60];
+
+    const posXstart = 17;
+    const posXunit = 33;
+
+    const series = ehGroups.map((group, idx) => {
+      const groupCount = group.numbers.length;
+      const groupPoints = familyEhDataPoints ?
+        group.numbers.map((no) => familyEhDataPoints[no - 1]) : [0];
+      // console.log('groupPoints', groupPoints);
+      const groupPointsTotal = groupPoints.reduce((a, b) => a + b);
+      const groupPointsAverage = groupPointsTotal / groupCount;
+
+      const posX = idx < 3 ? posXstart + (posXunit * idx) : posXstart + (posXunit * (idx - 3));
+      const posY = idx < 3 ? 30 : 70;
+      const pointMax = 5;
+      const pointPercent = (groupPointsAverage * 100) / pointMax;
+      const voidPercent = 100 - pointPercent;
+      const data = {
+        type: 'pie',
+        center: [`${posX}%`, `${posY}%`],
+        radius,
+        itemStyle: labelFromatter,
+        data: [
+          { name: group.name, value: pointPercent.toFixed(1), itemStyle: labelTop },
+          {
+            name: 'void',
+            value: voidPercent.toFixed(1),
+            point: groupPointsAverage.toFixed(1),
+            itemStyle: labelBottom,
+          },
+        ],
+      };
+
+      return data;
+    });
+    console.log('series', series);
+    const option = {
+      title: {
+        text: '문항 그룹별 평균',
+        subtext: '각 영역별 낮은 점수는 항목별 주의를 요합니다.',
+        x: 'center',
+      },
+      /*
+      legend: {
+        x: 'center',
+        y: 'center',
+        data: [
+          'GoogleMaps', 'Facebook', 'Youtube', 'Google+', 'Weixin',
+          'Twitter', 'Skype', 'Messenger', 'Whatsapp', 'Instagram',
+        ],
+      },
+      */
+      toolbox: {
+        show: true,
+        feature: {
+          // dataView: { show: true, readOnly: false },
+          restore: { show: true, title: '재설정' },
+          saveAsImage: { show: true, title: '저장' },
+        },
+      },
+      series,
+    };
+    return option;
+  }
   componentWillMount() {
     // ehDataUserAnswers.fill(0);
     // ehDataUserPoints.fill(0);
@@ -55,12 +167,10 @@ class EhdReportPage extends trackerReact(React.Component) {
     return UserEhData.findOne({ familyId });
   }
   render() {
-    console.log('ehGroups', ehGroups);
-
     const stepIndex = 1;
     const familyEhData = this.familyEhData(this.familyId);
     const familyEhDataPoints = familyEhData ? familyEhData.ehDataUserPoints : null;
-    console.log('ehDataUserPoints', familyEhDataPoints);
+    const ehGroupsTest = [];
 
     return (
       <div className="root counsel-step-content content-center bg-gray">
@@ -105,16 +215,20 @@ class EhdReportPage extends trackerReact(React.Component) {
           </table>
         </Paper>
 
-        {ehGroups.map((group, idx) => {
+        <ReactEcharts
+          option={this.getChartOption(familyEhDataPoints)}
+          style={{ height: '400px', width: '100%' }}
+          className="react-for-echarts"
+        />
+
+        {ehGroupsTest.map((group, idx) => {
           const groupCount = group.numbers.length;
           /*
           const groupPoints = familyEhDataPoints ?
             group.numbers.reduce((no) => familyEhDataPoints[no - 1]) :
             0;
           */
-
           // let groupUserPoints = 0;
-
           const groupPoints = familyEhDataPoints ?
             group.numbers.map((no) => familyEhDataPoints[no - 1]) : [0];
           // console.log('groupPoints', groupPoints);
