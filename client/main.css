@@ -198,6 +198,10 @@ img.profile-avata {
   border: 2px solid #fff; 
 }
 
+table.ehdQuestions tr td:nth-child(1) {
+  min-width: 100px;
+}
+
 table.ehdQuestions tr td:nth-child(2) {
   padding-left: 10px;
   text-align: left;
