@@ -70,6 +70,7 @@ table.center {
   left: 0px;
   right: 0px;
   bottom: 0px;
+  overflow: auto;
 }
 
 .bg-gray {

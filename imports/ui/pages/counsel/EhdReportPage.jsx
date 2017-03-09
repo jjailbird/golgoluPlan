@@ -12,22 +12,16 @@ import {
 import Paper from 'material-ui/Paper';
 import ReactEcharts from 'echarts-for-react';
 
-import { green500 } from 'material-ui/styles/colors';
 import RaisedButton from 'material-ui/RaisedButton';
-import IconArrowNext from 'material-ui/svg-icons/hardware/keyboard-arrow-right';
-import IconArrowPrev from 'material-ui/svg-icons/hardware/keyboard-arrow-left';
-import confirm from '../../../utils/confirm/confirm.js';
+import IconArrowRight from 'material-ui/svg-icons/action/trending-flat';
 
-// import { browserHistory } from 'react-router';
+import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { setPageTitle } from '../../../redux/actions/setPageTitle.js';
 
 import ehData from './data/eatingHabitQuestions';
 
 const ehGroups = ehData.groups;
-
-// const ehDataUserAnswers = new Array(ehQuestionCount);
-// const ehDataUserPoints = new Array(ehQuestionCount);
 
 const pageTitle = '식생활 진단 테스트 결과';
 class EhdReportPage extends trackerReact(React.Component) {
@@ -75,6 +69,10 @@ class EhdReportPage extends trackerReact(React.Component) {
         label: {
           show: true,
           position: 'center',
+          textStyle: {
+            color: '#48a0ff',
+            fontSize: '12px',
+          },
         },
         labelLine: {
           show: false,
@@ -218,6 +216,18 @@ class EhdReportPage extends trackerReact(React.Component) {
           style={{ height: '400px', width: '100%' }}
           className="react-for-echarts"
         />
+
+        <Paper zDepth={0}>
+          <RaisedButton
+            label="STEP02 다음단계"
+            labelPosition="before"
+            icon={<IconArrowRight />}
+            onTouchTap={() => { browserHistory.push(`/counsel/steps/${this.familyId}`); }}
+            primary
+            fullWidth
+          />
+        </Paper>
+
 
         {ehGroupsTest.map((group, idx) => {
           const groupCount = group.numbers.length;

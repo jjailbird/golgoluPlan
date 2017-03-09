@@ -63,7 +63,7 @@ class StepDisplayDone extends React.PureComponent {
                                 {profile.name} / {profile.age}세
                               </h5>
                             </td>
-                            <td style={{ textAlign: 'center', paddingLeft: '30px' }}>
+                            <td style={{ textAlign: 'center', paddingLeft: '10px' }}>
                               <div
                                 style={{
                                   color: '#fff',
@@ -107,7 +107,7 @@ class StepDisplayDone extends React.PureComponent {
                                 </span>
                               </div>
                               <div className="bmi-desc-badge">
-                                {bmiPoint.toFixed(1)} / {bmiDesc}
+                                {bmiDesc}
                               </div>
                             </td>
                           </tr>
