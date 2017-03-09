@@ -204,7 +204,7 @@ class BmiInputPage extends React.Component {
   render() {
     const stepIndex = 0;
     return (
-      <div className="root">
+      <div className="root content-center counsel-step-content">
         <Title render={(previousTitle) => `${pageTitle} - ${previousTitle}`} />
         <Stepper linear={false} activeStep={stepIndex}>
           <Step>
