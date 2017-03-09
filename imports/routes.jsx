@@ -13,6 +13,8 @@ import BmiInputPage from './ui/pages/counsel/BmiInputPage.jsx';
 import BmiReportPage from './ui/pages/counsel/BmiReportPage.jsx';
 import EhdInputPage from './ui/pages/counsel/EhdInputPage.jsx';
 import EhdReportPage from './ui/pages/counsel/EhdReportPage.jsx';
+import MrdHome from './ui/pages/counsel/MrdHome.jsx';
+
 import UploadPage from './ui/pages/UploadPage.jsx';
 import SignIn from './ui/pages/SignIn.jsx';
 import SignUp from './ui/pages/SignUp.jsx';
@@ -57,10 +59,12 @@ export const renderRoutes = () => (
         <Route path="counsel/steps(/:familyId)(/:pubDate)" component={CounselSteps} onEnter={requireAuth} />
         <Route path="counsel/step/01" component={BmiInputPage} onEnter={requireAuth} />
         <Route path="counsel/step/02(/:familyId)" component={EhdInputPage} onEnter={requireAuth} />
+        <Route path="counsel/step/03(/:familyId)" component={MrdHome} onEnter={requireAuth} />
         <Route path="counsel/bmi/input" component={BmiInputPage} onEnter={requireAuth} />
         <Route path="counsel/bmi/report(/:familyId)(/:pubDate)" component={BmiReportPage} onEnter={requireAuth} />
         <Route path="counsel/ehd/input" component={EhdInputPage} onEnter={requireAuth} />
         <Route path="counsel/ehd/report(/:familyId)" component={EhdReportPage} onEnter={requireAuth} />
+        <Route path="counsel/mrd/(/:familyId)" component={MrdHome} onEnter={requireAuth} />
         <Route path="upload" component={UploadPage} />
         <Route path="signin" component={SignIn} />
         <Route path="signup" component={SignUp} />
