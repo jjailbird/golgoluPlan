@@ -115,7 +115,7 @@ class BmiReportPage extends trackerReact(React.Component) {
     }
 
     return (
-      <div className="root content-center">
+      <div className="root counsel-step-content content-center">
         <Title render={(previousTitle) => `${pageTitle} - ${previousTitle}`} />
         <Stepper linear={false} activeStep={stepIndex}>
           <Step>
