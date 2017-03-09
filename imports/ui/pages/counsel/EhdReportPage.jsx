@@ -41,13 +41,12 @@ class EhdReportPage extends trackerReact(React.Component) {
     };
   }
   getChartOption(familyEhDataPoints) {
-    // if (!familyEhDataPoints) return null;
-
     const labelFromatter = {
       normal: {
         label: {
           formatter(params) {
-            return params.data.point ? params.data.point : params.value; // `${100 - params.value}%`;
+            return params.data.point ? params.data.point : params.value;
+            // `${100 - params.value}%`;
           },
           textStyle: {
             baseline: 'top',

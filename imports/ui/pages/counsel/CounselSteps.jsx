@@ -2,6 +2,8 @@ import { Meteor } from 'meteor/meteor';
 import trackerReact from 'meteor/ultimatejs:tracker-react';
 import { UserFamily } from '../../../api/collections/UserFamily.js';
 import { MediaFiles } from '../../../api/collections/MediaFiles.js';
+import { UserEhData } from '../../../api/collections/UserEhData.js';
+
 import moment from 'moment';
 
 import { connect } from 'react-redux';
@@ -31,6 +33,7 @@ class CounselSteps extends trackerReact(React.Component) {
       subscription: {
         userFamilies: Meteor.subscribe('userfamilies.private'),
         mediaFiles: Meteor.subscribe('MediaFiles.private'),
+        userEhdata: Meteor.subscribe('userehdata.private'),
       },
     };
   }
@@ -42,12 +45,16 @@ class CounselSteps extends trackerReact(React.Component) {
     // console.log('componentWillUnmount');
     this.state.subscription.userFamilies.stop();
     this.state.subscription.mediaFiles.stop();
+    this.state.subscription.userEhdata.stop();
   }
   userFamily(familyId) {
     return UserFamily.findOne({ _id: familyId });
   }
   mediaFile(familyId) {
     return MediaFiles.findOne({ 'meta.familyId': familyId });
+  }
+  familyEhData(familyId) {
+    return UserEhData.findOne({ familyId });
   }
   render() {
     const profile = {
@@ -60,6 +67,7 @@ class CounselSteps extends trackerReact(React.Component) {
       image: '/img/person.blank.png',
     };
     const family = this.userFamily(this.familyId);
+    const familyEhdata = this.familyEhData(this.familyId);
     // const media = this.mediaFile(this.familyId);
     if (family) {
       profile.name = family.name;
@@ -100,12 +108,21 @@ class CounselSteps extends trackerReact(React.Component) {
             linkUrl="/counsel/step/01"
           />
         }
-        <StepDisplay
-          step="02"
-          description="식생활 진단 테스트"
-          icon="icon-notes"
-          linkUrl={`/counsel/step/02/${this.familyId}`}
-        />
+        {familyEhdata ?
+          <StepDisplayDone
+            step="02"
+            description="식생활 진단 테스트"
+            icon="icon-notes"
+            linkUrl={`/counsel/ehd/report/${this.familyId}`}
+          />
+          :
+          <StepDisplay
+            step="02"
+            description="식생활 진단 테스트"
+            icon="icon-notes"
+            linkUrl={`/counsel/step/02/${this.familyId}`}
+          />
+        }
         <StepDisplay
           step="03"
           description="24시간 식사 기록"
