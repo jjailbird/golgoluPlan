@@ -172,7 +172,6 @@ class EhdInputPage extends trackerReact(React.Component) {
             </tbody>
           </table>
         </Paper>
-        <div><h6>{ehDataUserAnswers[questionNo - 1]}</h6></div>
         <AnswerCheckButtonGroup
           onChange={no => { this.onAnswerChange(no); }}
         />
