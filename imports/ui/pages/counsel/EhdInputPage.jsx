@@ -129,7 +129,7 @@ class EhdInputPage extends trackerReact(React.Component) {
     // console.log('question', question);
     // console.log('ehDataUserAnswers', ehDataUserAnswers);
     return (
-      <div className="root content-center">
+      <div className="root counsel-step-content content-center">
         <Title render={(previousTitle) => `${pageTitle} - ${previousTitle}`} />
 
         <Stepper activeStep={stepIndex}>
