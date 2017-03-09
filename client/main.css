@@ -64,13 +64,15 @@ table.center {
 }
 
 .counsel-step-content {
-  text-align: left;
   position: absolute;
   top: 64px;
   left: 0px;
   right: 0px;
   bottom: 0px;
   overflow: auto;
+}
+.content-left {
+  text-align: left;
 }
 
 .bg-gray {

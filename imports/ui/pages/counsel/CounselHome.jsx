@@ -64,7 +64,7 @@ class CounselHome extends trackerReact(React.Component) {
     }
 
     return (
-      <div className="root counsel-step-content">
+      <div className="root counsel-step-content content-left">
         <Title render={(previousTitle) => `${pageTitle} - ${previousTitle}`} />
         <Paper className="counsel-step-button-container center" zDepth={0}>
           <div className="center">

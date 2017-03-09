@@ -169,7 +169,7 @@ class EhdReportPage extends trackerReact(React.Component) {
     const ehGroupsTest = [];
 
     return (
-      <div className="root counsel-step-content content-center bg-gray">
+      <div className="root counsel-step-content bg-gray">
         <Title render={(previousTitle) => `${pageTitle} - ${previousTitle}`} />
         <Stepper activeStep={stepIndex}>
           <Step>

@@ -88,7 +88,7 @@ class CounselSteps extends trackerReact(React.Component) {
     }
 
     return (
-      <div className="root counsel-step-content bg-gray">
+      <div className="root counsel-step-content content-left bg-gray">
         <Title render={(previousTitle) => `${pageTitle} - ${previousTitle}`} />
         <h3 className="description">
           STEP01~03까지 진행하시면 전문가에게 현재 식습관 분석과 자세한 영양 상담을 받으실 수 있습니다.

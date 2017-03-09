@@ -71,9 +71,11 @@ class HomeRegister extends React.PureComponent {
       <div
         className="full-area"
         style={{
-          backgroundImage: 'url("/img/home.login.bak.mini.jpg")',
-          backgroundRepeat: 'no-repeat',
+          backgroundImage: 'url("/img/home.login.background.mini.jpg")',
+          // backgroundRepeat: 'no-repeat',
           backgroundPosition: 'center center',
+          backgroundSize: 'cover',
+          overflow: 'auto',
         }}
       >
         <Title render={(previousTitle) => `${pageTitle} - ${previousTitle}`} />
