@@ -4,11 +4,7 @@ import { UserEhData } from '../../../api/collections/UserEhData.js';
 
 import React from 'react';
 import Title from 'react-title-component';
-import {
-  Step,
-  Stepper,
-  StepButton,
-} from 'material-ui/Stepper';
+import StepBar from './components/StepBar.jsx';
 import Paper from 'material-ui/Paper';
 import IconButton from 'material-ui/IconButton';
 import FontIcon from 'material-ui/FontIcon';
@@ -25,7 +21,7 @@ import ehData from './data/eatingHabitQuestions';
 
 const ehGroups = ehData.groups;
 
-const pageTitle = '식생활 진단 테스트 결과';
+const pageTitle = '24시간 식사기록';
 class EhdReportPage extends trackerReact(React.Component) {
   constructor(props) {
     super(props);
@@ -50,29 +46,10 @@ class EhdReportPage extends trackerReact(React.Component) {
     return UserEhData.findOne({ familyId });
   }
   render() {
-    const stepIndex = 2;
-
     return (
       <div className="root counsel-step-content bg-gray">
         <Title render={(previousTitle) => `${pageTitle} - ${previousTitle}`} />
-        <Stepper activeStep={stepIndex}>
-          <Step>
-            <StepButton onClick={() => this.setState({ stepIndex: 0 })}>
-              STEP01
-            </StepButton>
-          </Step>
-          <Step>
-            <StepButton onClick={() => this.setState({ stepIndex: 1 })}>
-              STEP02
-            </StepButton>
-          </Step>
-          <Step>
-            <StepButton onClick={() => this.setState({ stepIndex: 2 })}>
-              STEP03
-            </StepButton>
-          </Step>
-        </Stepper>
-
+        <StepBar stepIndex={2} />
         <Paper
           className="counsel-step-button-container"
           style={{ border: '3px solid #4ab046' }}
@@ -106,14 +83,15 @@ class EhdReportPage extends trackerReact(React.Component) {
                     className="step-button"
                     style={{ width: '40px', height: '40px', padding: '0px' }}
                     iconStyle={{ fontSize: '40px' }}
-                    onTouchTap={() => { browserHistory.push(''); }}
+                    onTouchTap={() => {
+                      browserHistory.push(`/counsel/mrd/input/${this.familyId}`);
+                    }}
                   >
                     <FontIcon
                       className="icon-arrow-right-circle-background"
                       color={green500}
                     />
                   </IconButton>
-
                 </td>
               </tr>
             </tbody>

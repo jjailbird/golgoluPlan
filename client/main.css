@@ -79,7 +79,7 @@ table.center {
   background-color: #e8e8e8;
 }
 
-.counsel-step-content > .description {
+.counsel-step-content > .description, .counsel-step-content .description {
   padding: 0px 20px;
   font-weight: normal;
 }

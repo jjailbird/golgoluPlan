@@ -1,11 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import React from 'react';
 import Title from 'react-title-component';
-import {
-  Step,
-  Stepper,
-  StepButton,
-} from 'material-ui/Stepper';
+import StepBar from './components/StepBar.jsx';
 import Paper from 'material-ui/Paper';
 import Badge from 'material-ui/Badge';
 import Avatar from 'material-ui/Avatar';
@@ -202,27 +198,10 @@ class BmiInputPage extends React.Component {
     this.setState({ canSubmit: true });
   }
   render() {
-    const stepIndex = 0;
     return (
       <div className="root counsel-step-content">
         <Title render={(previousTitle) => `${pageTitle} - ${previousTitle}`} />
-        <Stepper linear={false} activeStep={stepIndex}>
-          <Step>
-            <StepButton onClick={() => this.setState({ stepIndex: 0 })}>
-              STEP01
-            </StepButton>
-          </Step>
-          <Step>
-            <StepButton onClick={() => this.setState({ stepIndex: 1 })}>
-              STEP02
-            </StepButton>
-          </Step>
-          <Step>
-            <StepButton onClick={() => this.setState({ stepIndex: 2 })}>
-              STEP03
-            </StepButton>
-          </Step>
-        </Stepper>
+        <StepBar stepIndex={0} />
         <Badge
           badgeContent={
             <IconButton

@@ -4,11 +4,7 @@ import { UserFamily } from '../../../api/collections/UserFamily.js';
 
 import React from 'react';
 import Title from 'react-title-component';
-import {
-  Step,
-  Stepper,
-  StepButton,
-} from 'material-ui/Stepper';
+import StepBar from './components/StepBar.jsx';
 import Paper from 'material-ui/Paper';
 import { green500 } from 'material-ui/styles/colors';
 import RaisedButton from 'material-ui/RaisedButton';
@@ -116,7 +112,6 @@ class EhdInputPage extends trackerReact(React.Component) {
     }
   }
   render() {
-    const stepIndex = 1;
     const { question } = this.props;
     let questionNo = 1;
     let questionNumber = '';
@@ -131,24 +126,7 @@ class EhdInputPage extends trackerReact(React.Component) {
     return (
       <div className="root counsel-step-content content-center">
         <Title render={(previousTitle) => `${pageTitle} - ${previousTitle}`} />
-
-        <Stepper activeStep={stepIndex}>
-          <Step>
-            <StepButton onClick={() => this.setState({ stepIndex: 0 })}>
-              STEP01
-            </StepButton>
-          </Step>
-          <Step>
-            <StepButton onClick={() => this.setState({ stepIndex: 1 })}>
-              STEP02
-            </StepButton>
-          </Step>
-          <Step>
-            <StepButton onClick={() => this.setState({ stepIndex: 2 })}>
-              STEP03
-            </StepButton>
-          </Step>
-        </Stepper>
+        <StepBar stepIndex={1} />
         <Paper
           className="counsel-step-button-container"
           style={{ border: '3px solid #4ab046' }}

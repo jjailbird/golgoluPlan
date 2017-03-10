@@ -5,11 +5,7 @@ import { MediaFiles } from '../../../api/collections/MediaFiles.js';
 
 import React from 'react';
 import Title from 'react-title-component';
-import {
-  Step,
-  Stepper,
-  StepButton,
-} from 'material-ui/Stepper';
+import StepBar from './components/StepBar.jsx';
 import Avatar from 'material-ui/Avatar';
 import FontIcon from 'material-ui/FontIcon';
 import Paper from 'material-ui/Paper';
@@ -76,7 +72,6 @@ class BmiReportPage extends trackerReact(React.Component) {
     return MediaFiles.findOne({ 'meta.familyId': familyId });
   }
   render() {
-    const stepIndex = 0;
     const family = this.userFamily(this.familyId);
     const mediaFile = this.mediaFile(this.familyId);
     this.bmiPubDate = this.state.bmiPubDate;
@@ -117,23 +112,7 @@ class BmiReportPage extends trackerReact(React.Component) {
     return (
       <div className="root counsel-step-content content-center">
         <Title render={(previousTitle) => `${pageTitle} - ${previousTitle}`} />
-        <Stepper linear={false} activeStep={stepIndex}>
-          <Step>
-            <StepButton onClick={() => this.setState({ stepIndex: 0 })}>
-              STEP01
-            </StepButton>
-          </Step>
-          <Step>
-            <StepButton onClick={() => this.setState({ stepIndex: 1 })}>
-              STEP02
-            </StepButton>
-          </Step>
-          <Step>
-            <StepButton onClick={() => this.setState({ stepIndex: 2 })}>
-              STEP03
-            </StepButton>
-          </Step>
-        </Stepper>
+        <StepBar stepIndex={0} />
         <Paper zDepth={0}>
           <table className="family-profile center">
             <tbody>

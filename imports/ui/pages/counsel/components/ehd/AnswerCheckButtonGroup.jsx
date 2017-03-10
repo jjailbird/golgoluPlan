@@ -48,7 +48,9 @@ class AnswerCheckButtonGroup extends React.Component {
           answerWithStyles.map((answer) => (
             <div className="ehdAnswerRow" key={answer.idx} data-idx={answer.idx}>
               <div
-                className={answer.idx === selectedIndex ? 'ehdAnswer-check-button selected' : 'ehdAnswer-check-button'}
+                className={
+                  answer.idx === selectedIndex ? 'ehdAnswer-check-button selected' : 'ehdAnswer-check-button'
+                }
                 data-idx={answer.idx}
                 data-point={answer.point}
                 onTouchTap={this.onButtonClick}

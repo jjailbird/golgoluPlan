@@ -4,35 +4,16 @@ import { UserFamily } from '../../../api/collections/UserFamily.js';
 
 import React from 'react';
 import Title from 'react-title-component';
-import {
-  Step,
-  Stepper,
-  StepButton,
-} from 'material-ui/Stepper';
-import Paper from 'material-ui/Paper';
 import { green500 } from 'material-ui/styles/colors';
-import RaisedButton from 'material-ui/RaisedButton';
-import IconArrowNext from 'material-ui/svg-icons/hardware/keyboard-arrow-right';
-import IconArrowPrev from 'material-ui/svg-icons/hardware/keyboard-arrow-left';
-// import Dialog from 'material-ui/Dialog';
-import confirm from '../../../utils/confirm/confirm.js';
+import Paper from 'material-ui/Paper';
+import StepBar from './components/StepBar.jsx';
 
 import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { setPageTitle } from '../../../redux/actions/setPageTitle.js';
-import { setQuestionSelect, setAnswerSelect } from '../../../redux/actions/ehdQuestionSelect.js';
 
-import AnswerCheckButtonGroup from './components/ehd/AnswerCheckButtonGroup.jsx';
-import ehData from './data/eatingHabitQuestions';
 
-// const ehGroups = ehData.groups;
-const ehQuestions = ehData.questions;
-const ehQuestionCount = ehQuestions.groupAll.length;
-
-const ehDataUserAnswers = new Array(ehQuestionCount);
-const ehDataUserPoints = new Array(ehQuestionCount);
-
-const pageTitle = '식생활 진단 테스트';
+const pageTitle = '24시간 식사기록(영양사)';
 class EhdInputPage extends trackerReact(React.Component) {
   constructor(props) {
     super(props);
@@ -44,19 +25,10 @@ class EhdInputPage extends trackerReact(React.Component) {
         userFamilies: Meteor.subscribe('userfamilies.private'),
       },
     };
-    this.onQuestionChange = this.onQuestionChange.bind(this);
-    this.onAnswerChange = this.onAnswerChange.bind(this);
-    this.onConfirmGotoResult = this.onConfirmGotoResult.bind(this);
   }
   componentWillMount() {
-    ehDataUserAnswers.fill(0);
-    ehDataUserPoints.fill(0);
-
-    console.log('ehDataInit', ehDataUserAnswers, ehDataUserPoints);
-
     const { dispatch } = this.props;
     dispatch(setPageTitle(pageTitle));
-    dispatch(setQuestionSelect(ehQuestions.groupAll[0]));
   }
   componentDidMount() {
     // console.log('componentDidMount');
@@ -67,88 +39,31 @@ class EhdInputPage extends trackerReact(React.Component) {
   userFamily(familyId) {
     return UserFamily.findOne({ _id: familyId });
   }
-  onQuestionChange(value) {
-    const { dispatch } = this.props;
-    dispatch(setQuestionSelect(ehQuestions.groupAll[value - 1]));
-    dispatch(setAnswerSelect(ehDataUserAnswers[value - 1]));
-  }
-  onAnswerChange(value) {
-    const { dispatch, question } = this.props;
-    dispatch(setAnswerSelect(value));
-    const questionIdx = question.no - 1;
-    ehDataUserAnswers[questionIdx] = value;
-    ehDataUserPoints[questionIdx] = question.points[value - 1];
-  }
-  onConfirmGotoResult() {
-    const unansweredIdx = ehDataUserAnswers.findIndex((answer) => answer === 0);
-    console.log('unansweredIdx', unansweredIdx);
-
-    if (unansweredIdx > -1) {
-      confirm('응답하시지 않은 질문이 있습니다, 해당 문제로 이동하시겠습니까?').then(() => {
-        const { dispatch } = this.props;
-        dispatch(setQuestionSelect(ehQuestions.groupAll[unansweredIdx]));
-        dispatch(setAnswerSelect(ehDataUserAnswers[unansweredIdx]));
-      }, () => {
-      });
-    } else {
-      confirm('모든 답변을 저장하시고 결과 페이지로 이동하시겠습니까?').then(() => {
-        if (!this.userId) {
-          this.userId = Meteor.userId();
-        }
-        const data = {
-          userId: this.userId,
-          familyId: this.familyId,
-          ehDataUserAnswers,
-          ehDataUserPoints,
-        };
-
-        // console.log('insert data:', data);
-        Meteor.call('UserEhData.insert', data, (err, res) => {
-          if (err) {
-            console.log('Meteor.call error', err);
-            alert(err);
-          } else {
-            browserHistory.push(`/counsel/ehd/report/${this.familyId}`);
-          }
-        });
-      }, () => {
-      });
-    }
-  }
   render() {
-    const stepIndex = 1;
-    const { question } = this.props;
-    let questionNo = 1;
-    let questionNumber = '';
-    let questionString = '';
-    if (question) {
-      questionNo = question.no;
-      questionNumber = `Q${question.no}`;
-      questionString = question.question;
-    }
-    // console.log('question', question);
-    // console.log('ehDataUserAnswers', ehDataUserAnswers);
     return (
-      <div className="root counsel-step-content content-center">
+      <div className="root counsel-step-content content-center bg-gray">
         <Title render={(previousTitle) => `${pageTitle} - ${previousTitle}`} />
+        <StepBar stepIndex={2} />
+        <table>
+          <tbody>
+            <tr>
+              <td>
+                <img
+                  src="/img/counselor.png"
+                  alt="counselor"
+                  style={{ verticalAlign: 'middle', width: '50px' }}
+                />
+              </td>
+              <td>
+                <h4 className="description content-left">
+                  24시간동안 먹은 식사의 식전사진과 식후사진을 기록해주세요.<br />
+                  전문 영양사가 기록된 사진을 통하여 영양상담과 처방을 드립니다.
+                </h4>
+              </td>
+            </tr>
+          </tbody>
+        </table>
 
-        <Stepper activeStep={stepIndex}>
-          <Step>
-            <StepButton onClick={() => this.setState({ stepIndex: 0 })}>
-              STEP01
-            </StepButton>
-          </Step>
-          <Step>
-            <StepButton onClick={() => this.setState({ stepIndex: 1 })}>
-              STEP02
-            </StepButton>
-          </Step>
-          <Step>
-            <StepButton onClick={() => this.setState({ stepIndex: 2 })}>
-              STEP03
-            </StepButton>
-          </Step>
-        </Stepper>
         <Paper
           className="counsel-step-button-container"
           style={{ border: '3px solid #4ab046' }}
@@ -161,65 +76,17 @@ class EhdInputPage extends trackerReact(React.Component) {
                   <h1
                     style={{ color: green500 }}
                   >
-                    {questionNumber}
+                    test
                     <span style={{ fontSize: '14px' }}>
-                      / {ehQuestionCount}
+                      / test
                     </span>
                   </h1>
                 </td>
-                <td>{questionString}</td>
+                <td>test</td>
               </tr>
             </tbody>
           </table>
         </Paper>
-        <AnswerCheckButtonGroup
-          onChange={no => { this.onAnswerChange(no); }}
-        />
-        <div className="ehd-question-navi">
-          {questionNo > 1 ?
-            <RaisedButton
-              className="ehd-question-navi-button"
-              label="이전문항"
-              labelPosition="after"
-              icon={<IconArrowPrev />}
-              onTouchTap={() => { this.onQuestionChange(questionNo - 1); }}
-              primary
-              style={{ float: 'left' }}
-            />
-          : null}
-          {questionNo < ehQuestionCount ?
-            <RaisedButton
-              className="ehd-question-navi-button"
-              label="다음문항"
-              labelPosition="before"
-              icon={<IconArrowNext />}
-              onTouchTap={() => { this.onQuestionChange(questionNo + 1); }}
-              primary
-              style={{ float: 'right' }}
-            />
-          : null}
-          {questionNo === ehQuestionCount && this.props.answer ?
-            <RaisedButton
-              className="ehd-question-navi-button"
-              label="결과보기"
-              labelPosition="before"
-              icon={<IconArrowNext />}
-              onTouchTap={this.onConfirmGotoResult}
-              style={{ float: 'right' }}
-              labelColor="#fff"
-              backgroundColor="#fd4080"
-            />
-          : null}
-        </div>
-        {/*
-          <Pagination
-            className="ehd-paging"
-            total={9}
-            current={this.state.questionNo}
-            display={9}
-            onChange={no => this.onQuestionChange(no)}
-          />
-        */}
       </div>
     );
   }
@@ -236,8 +103,6 @@ EhdInputPage.propTypes = {
 function mapStateToProps(state) {
   return {
     user: state.authenticate.user,
-    question: state.ehdQuestion.selectedQuestion,
-    answer: state.ehdQuestion.selectedAnswer,
   };
 }
 

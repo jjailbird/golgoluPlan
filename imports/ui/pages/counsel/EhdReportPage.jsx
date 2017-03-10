@@ -4,11 +4,7 @@ import { UserEhData } from '../../../api/collections/UserEhData.js';
 
 import React from 'react';
 import Title from 'react-title-component';
-import {
-  Step,
-  Stepper,
-  StepButton,
-} from 'material-ui/Stepper';
+import StepBar from './components/StepBar.jsx';
 import Paper from 'material-ui/Paper';
 import ReactEcharts from 'echarts-for-react';
 
@@ -163,7 +159,6 @@ class EhdReportPage extends trackerReact(React.Component) {
     return UserEhData.findOne({ familyId });
   }
   render() {
-    const stepIndex = 1;
     const familyEhData = this.familyEhData(this.familyId);
     const familyEhDataPoints = familyEhData ? familyEhData.ehDataUserPoints : null;
     const ehGroupsTest = [];
@@ -171,24 +166,7 @@ class EhdReportPage extends trackerReact(React.Component) {
     return (
       <div className="root counsel-step-content bg-gray">
         <Title render={(previousTitle) => `${pageTitle} - ${previousTitle}`} />
-        <Stepper activeStep={stepIndex}>
-          <Step>
-            <StepButton onClick={() => this.setState({ stepIndex: 0 })}>
-              STEP01
-            </StepButton>
-          </Step>
-          <Step>
-            <StepButton onClick={() => this.setState({ stepIndex: 1 })}>
-              STEP02
-            </StepButton>
-          </Step>
-          <Step>
-            <StepButton onClick={() => this.setState({ stepIndex: 2 })}>
-              STEP03
-            </StepButton>
-          </Step>
-        </Stepper>
-
+        <StepBar stepIndex={1} />
         <Paper
           className="counsel-step-button-container"
           style={{ border: '3px solid #4ab046' }}
