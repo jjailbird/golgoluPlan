@@ -7,6 +7,7 @@ import Title from 'react-title-component';
 import { green500 } from 'material-ui/styles/colors';
 import Paper from 'material-ui/Paper';
 import StepBar from './components/StepBar.jsx';
+import MealRecordPanel from './components/MealRecordPanel.jsx';
 
 import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
@@ -63,30 +64,12 @@ class EhdInputPage extends trackerReact(React.Component) {
             </tr>
           </tbody>
         </table>
-
-        <Paper
-          className="counsel-step-button-container"
-          style={{ border: '3px solid #4ab046' }}
-          zDepth={0}
-        >
-          <table className="ehdQuestions">
-            <tbody>
-              <tr>
-                <td>
-                  <h1
-                    style={{ color: green500 }}
-                  >
-                    test
-                    <span style={{ fontSize: '14px' }}>
-                      / test
-                    </span>
-                  </h1>
-                </td>
-                <td>test</td>
-              </tr>
-            </tbody>
-          </table>
-        </Paper>
+        <MealRecordPanel title="아침" mealType="breakFast" />
+        <MealRecordPanel title="간식" mealType="snack_1" />
+        <MealRecordPanel title="점심" mealType="lunch" />
+        <MealRecordPanel title="간식" mealType="snack_2" />
+        <MealRecordPanel title="저녁" mealType="dinner" />
+        <MealRecordPanel title="간식" mealType="snack_3" />
       </div>
     );
   }
@@ -95,8 +78,6 @@ class EhdInputPage extends trackerReact(React.Component) {
 EhdInputPage.propTypes = {
   dispatch: React.PropTypes.func,
   user: React.PropTypes.object,
-  question: React.PropTypes.object,
-  answer: React.PropTypes.number,
   params: React.PropTypes.object,
 };
 
