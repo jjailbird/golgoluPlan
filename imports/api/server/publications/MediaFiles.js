@@ -12,6 +12,10 @@ if (Meteor.isServer) {
     // console.log('MediaFiles.userId', this.userId);
     return MediaFiles.find({ userId: this.userId }).cursor;
   });
+  Meteor.publish('MediaFiles.private.mealRecords', function () {
+    // console.log('MediaFiles.userId', this.userId);
+    return MediaFiles.find({ userId: this.userId, category: 'mealRecord' }).cursor;
+  });
   Meteor.methods({
     'Files.Remove'(fileid) {
       check(fileid, String);

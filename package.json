@@ -47,6 +47,7 @@
     "redux-devtools-log-monitor": "^1.2.0",
     "redux-logger": "^2.7.4",
     "redux-thunk": "^2.2.0",
+    "shortid": "^2.2.8",
     "underscore": "^1.8.3",
     "vue-material-datepicker": "^2.0.1"
   },

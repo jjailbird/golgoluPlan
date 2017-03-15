@@ -1,36 +1,55 @@
-import React from 'react';
-import Paper from 'material-ui/Paper';
-import FontIcon from 'material-ui/FontIcon';
-import Divider from 'material-ui/Divider';
-import { Accordion, AccordionItem } from 'react-sanfona';
-import FileUploadImageBox from '../../../components/FileUploadImageBox.jsx';
-
+/* eslint-disable no-underscore-dangle */
+import React, { Component } from 'react';
 import { Meteor } from 'meteor/meteor';
-import { MediaFiles } from '../../../../api/collections/MediaFiles.js';
 
-export default class MealRecordPanel extends React.Component {
+import trackerReact from 'meteor/ultimatejs:tracker-react';
+import LinearProgress from 'material-ui/LinearProgress';
+import Subheader from 'material-ui/Subheader';
+import MenuItem from 'material-ui/MenuItem';
+import RaisedButton from 'material-ui/RaisedButton';
+import IconInput from 'material-ui/svg-icons/action/input';
+
+import Formsy from 'formsy-react';
+import FormsyText from 'formsy-material-ui/lib/FormsyText';
+import FormsySelect from 'formsy-material-ui/lib/FormsySelect';
+
+import randomString from '../../utils/randomString.js';
+import ToggleDisplay from 'react-toggle-display';
+import { MediaFiles } from '../../api/collections/MediaFiles.js';
+
+// const pid = shortid.generate();
+
+class FileUploadImgBox extends trackerReact(Component) {
+// class FileUploadImgBox extends Component {
   constructor(props) {
     super(props);
+    this.compId = randomString(7);
+    this.imageId = `imageViewer${this.compId}`;
+    this.inputFileId = `inputFile${this.compId}`;
     this.state = {
+      uploading: [],
       progress: 0,
       inProgress: false,
-      image1PreviewUrl: '/img/image.blank.svg',
-      image2PreviewUrl: '/img/image.blank.svg',
       subscription: {
-        mealFiles: Meteor.subscribe('MediaFiles.private.mealRecords'),
+        files: Meteor.subscribe('MediaFiles.all'),
       },
+      lightboxIsOpen: false,
+      currentImage: 0,
+      fileName: '',
+      imagePreviewUrl: '/img/image.blank.svg',
     };
     this.openFileDialog = this.openFileDialog.bind(this);
-    this.onImageChange = this.onImageChange.bind(this);
     this.uploadIt = this.uploadIt.bind(this);
+    this.onImageChange = this.onImageChange.bind(this);
   }
   componentWillUnmount() {
-    this.state.subscription.mealFiles.stop();
+    this.state.subscription.files.stop();
+  }
+  openFileDialog() {
+    document.getElementById(this.inputFileId).click();
   }
   onImageChange(e) {
     e.preventDefault();
-    e.stopPropagation();
-
     const reader = new FileReader();
     const file = e.target.files[0];
     const fileExtension = file && file.name.split('.').pop();
@@ -42,19 +61,29 @@ export default class MealRecordPanel extends React.Component {
     if (!file) {
       confirm = false;
       errMessage = '선택한 파일이 없습니다.';
+    } else if (this.props.fileType === 'video') {
+      confirm = /mp4/i.test(fileExtension);
+      errMessage = '허용된 동영상 파일 타입이 아닙니다.';
     } else {
       confirm = /png|jpg|jpeg/i.test(fileExtension);
       errMessage = '허용된 이미지 파일 타입이 아닙니다.';
     }
 
     if (confirm) {
-      reader.onloadend = () => {
+      if (this.props.fileType === 'video') {
         this.setState({
           fileName: file.name ? file.name.replace(`.${fileExtension}`, '') : '',
-          image1PreviewUrl: reader.result,
+          imagePreviewUrl: '/img/video.blank.svg',
         });
-      };
-      reader.readAsDataURL(file);
+      } else {
+        reader.onloadend = () => {
+          this.setState({
+            fileName: file.name ? file.name.replace(`.${fileExtension}`, '') : '',
+            imagePreviewUrl: reader.result,
+          });
+        };
+        reader.readAsDataURL(file);
+      }
     } else {
       this.inputFile.value = '';
       this.setState({
@@ -150,94 +179,68 @@ export default class MealRecordPanel extends React.Component {
       }
     }
   }
-  openFileDialog(e) {
-    e.stopPropagation();
-    
-    console.log('e.target', e.target.id);
-    const inputFile = document.getElementById('inputFile');
-    inputFile.click();
-    // document.getElementById('inputFile').click();
-    // this.refs.fileinput.clck();
-  }
-  togglePanel() {
-    this.setState({
-      collapse: !this.state.collapse,
-    });
-  }
   render() {
-    const { title } = this.props;
-    return (
-      <Paper
-        className="counsel-step-button-container"
-        style={{ border: '2px solid #999', padding: '10px' }}
-        zDepth={0}
-      >
-        <Accordion>
-          <AccordionItem
-            title={
-              <div>
-                <table style={{ width: '100%' }}>
-                  <tbody>
-                    <tr>
-                      <td style={{ width: '50%', textAlign: 'left', cursor: 'pointer' }}>
-                        <h4 style={{ margin: '0px' }}>{title}</h4>
-                      </td>
-                      <td style={{ width: '50%', textAlign: 'right', cursor: 'pointer' }}>
-                        <FontIcon
-                          className="icon-camera-1"
-                          style={{ fontSize: '26px' }}
-                        />
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            }
-            slug={1} key={1}
+    if (this.state.subscription.files.ready()) {
+      let uploadTitle = '';
+      switch (this.props.fileType) {
+        case 'cat':
+          uploadTitle = '카테고리';
+          break;
+        case 'video':
+          uploadTitle = '동영상';
+          break;
+        case 'image':
+          uploadTitle = '이미지';
+          break;
+        default:
+          uploadTitle = this.compId; // '파일';
+      }
+      return (
+        <div>
+          <div
+            style={{
+              position: 'relative', display: 'inline-block', verticalAlign: 'top' }}
           >
-            <div>
-              <Divider />
-              <table style={{ width: '100%', marginTop: '10px' }}>
-                <tbody>
-                  <tr>
-                    <td style={{ width: '50%' }}>
-                      <div style={{ width: '100%', backgroundColor: '#EFEFEF' }}>
-                        <FileUploadImageBox />
-                      </div>
-                      <h4 style={{ margin: '0px' }}>식전</h4>
-                    </td>
-                    <td style={{ width: '50%' }}>
-                      <div style={{ width: '100%', backgroundColor: '#EFEFEF' }}>
-                        <FileUploadImageBox />
-                      </div>
-                      <h4 style={{ margin: '0px' }}>식후</h4>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-              <input
-                type="file"
-                id="inputFile"
-                // ref="fileinput"
-                ref={(input) => this.inputFile = input}
-                disabled={this.state.inProgress}
-                // onChange={this.uploadIt}
-                onChange={this.onImageChange}
-                style={{ display: 'none' }}
-              />
-            </div>
-          </AccordionItem>
-        </Accordion>
-      </Paper>
-    );
+            <img
+              id={this.imageId}
+              src={this.state.imagePreviewUrl}
+              // src={imagePreviewUrl}
+              alt="Select"
+              // width="200px"
+              // height="130px"
+              style={{
+                maxWidth: '150px', backgroundColor: '#EFEFEF',
+                cursor: 'pointer',
+              }}
+              onTouchTap={this.openFileDialog}
+            />
+            <input
+              type="file"
+              id={this.inputFileId}
+              // ref="fileinput"
+              ref={(input) => this.inputFile = input}
+              disabled={this.state.inProgress}
+              // onChange={this.uploadIt}
+              onChange={this.onImageChange}
+              style={{ display: 'none' }}
+            />
+          </div>
+          <ToggleDisplay show={this.state.inProgress}>
+            <LinearProgress mode="determinate" value={this.state.progress} />
+            <span>{this.state.progress}%</span>
+          </ToggleDisplay>
+        </div>
+      );
+    }
+    return (<div>not ready</div>);
   }
 }
 
-MealRecordPanel.propTypes = {
-  title: React.PropTypes.string,
-  /*
-  key: React.PropTypes.oneOf([
-    'breakFast', 'lunch', 'dinner', 'snack', 'snack_1', 'snack_2', 'snack_3']
-  ),
-  */
+FileUploadImgBox.propTypes = {
+  fileType: React.PropTypes.string,
+  showCategory: React.PropTypes.bool,
+  onSelectCategory: React.PropTypes.func,
+  onUploaded: React.PropTypes.func,
 };
+
+export default FileUploadImgBox;

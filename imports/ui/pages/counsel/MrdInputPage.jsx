@@ -64,12 +64,12 @@ class EhdInputPage extends trackerReact(React.Component) {
             </tr>
           </tbody>
         </table>
-        <MealRecordPanel title="아침" mealType="breakFast" />
-        <MealRecordPanel title="간식" mealType="snack_1" />
-        <MealRecordPanel title="점심" mealType="lunch" />
-        <MealRecordPanel title="간식" mealType="snack_2" />
-        <MealRecordPanel title="저녁" mealType="dinner" />
-        <MealRecordPanel title="간식" mealType="snack_3" />
+        <MealRecordPanel title="아침" key="breakFast" />
+        <MealRecordPanel title="간식" key="snack_1" />
+        <MealRecordPanel title="점심" key="lunch" />
+        <MealRecordPanel title="간식" key="snack_2" />
+        <MealRecordPanel title="저녁" key="dinner" />
+        <MealRecordPanel title="간식" key="snack_3" />
       </div>
     );
   }
