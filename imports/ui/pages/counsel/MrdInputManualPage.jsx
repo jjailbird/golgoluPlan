@@ -4,18 +4,15 @@ import { UserFamily } from '../../../api/collections/UserFamily.js';
 
 import React from 'react';
 import Title from 'react-title-component';
-import { green500 } from 'material-ui/styles/colors';
-import Paper from 'material-ui/Paper';
 import StepBar from './components/StepBar.jsx';
-import MealRecordPanel from './components/MealRecordPanel.jsx';
+import MealRecordManualPanel from './components/MealRecordManualPanel.jsx';
 
-import { browserHistory } from 'react-router';
 import { connect } from 'react-redux';
 import { setPageTitle } from '../../../redux/actions/setPageTitle.js';
+import { browserHistory } from 'react-router';
 
-
-const pageTitle = '24시간 식사기록(영양사)';
-class MrdInputPage extends trackerReact(React.Component) {
+const pageTitle = '24시간 식사기록(간편입력)';
+class MrdInputManualPage extends trackerReact(React.Component) {
   constructor(props) {
     super(props);
     this.familyId = this.props.params.familyId;
@@ -65,15 +62,15 @@ class MrdInputPage extends trackerReact(React.Component) {
               </td>
               <td>
                 <h4 className="description content-left">
-                  24시간동안 먹은 식사의 식전사진과 식후사진을 기록해주세요.<br />
-                  전문 영양사가 기록된 사진을 통하여 영양상담과 처방을 드립니다.
+                  간편 검색 혹은 음식 사진을 통하여 식사기록을 제출하여<br />
+                  식생활에 대한 리포트를 빠르게 받을 수 있는 서비스입니다.
                 </h4>
               </td>
             </tr>
           </tbody>
         </table>
         {mealRecords.map((meal, idx) => (
-          <MealRecordPanel
+          <MealRecordManualPanel
             key={idx}
             title={meal.title}
             mealType={meal.mealType}
@@ -86,7 +83,7 @@ class MrdInputPage extends trackerReact(React.Component) {
   }
 }
 
-MrdInputPage.propTypes = {
+MrdInputManualPage.propTypes = {
   dispatch: React.PropTypes.func,
   user: React.PropTypes.object,
   params: React.PropTypes.object,
@@ -98,6 +95,6 @@ function mapStateToProps(state) {
   };
 }
 
-// export default connect(mapStateToProps)(MrdInputPage);
-export default connect(mapStateToProps)(MrdInputPage);
+// export default connect(mapStateToProps)(MrdInputManualPage);
+export default connect(mapStateToProps)(MrdInputManualPage);
 

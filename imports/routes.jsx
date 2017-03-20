@@ -14,7 +14,8 @@ import BmiReportPage from './ui/pages/counsel/BmiReportPage.jsx';
 import EhdInputPage from './ui/pages/counsel/EhdInputPage.jsx';
 import EhdReportPage from './ui/pages/counsel/EhdReportPage.jsx';
 import MrdHome from './ui/pages/counsel/MrdHome.jsx';
-import MrdInputPage from './ui/pages/counsel/MrdInputPage.jsx';
+import MrdInputPhotoPage from './ui/pages/counsel/MrdInputPhotoPage.jsx';
+import MrdInputManualPage from './ui/pages/counsel/MrdInputManualPage.jsx';
 
 import UploadPage from './ui/pages/UploadPage.jsx';
 import SignIn from './ui/pages/SignIn.jsx';
@@ -24,21 +25,7 @@ import { Provider } from 'react-redux';
 import stores from './redux/store/stores.js';
 
 import FamilyList from './ui/pages/counsel/components/FamilyList.jsx';
-/*
-export const renderRoutes = () => (
-  <Router history={browserHistory}>
-    <Route path="/" component={AppContainer}>
-      <IndexRoute component={HomePage} />
-      <Route path="home" component={HomePage} />
-      <Route path="counsel/start" component={CounselHome} />
-      <Route path="counsel/step/01" component={CounselStep01Page} />
-      <Route path="upload" component={UploadPage} />
-      <Route path="signin" component={SignIn} />
-      <Route path="signup" component={SignUp} />
-    </Route>
-  </Router>
-);
-*/
+
 const requireAuth = (nextState, replace) => {
   if (!Meteor.loggingIn() && !Meteor.userId()) {
     replace({
@@ -66,7 +53,8 @@ export const renderRoutes = () => (
         <Route path="counsel/ehd/input(/:familyId)" component={EhdInputPage} onEnter={requireAuth} />
         <Route path="counsel/ehd/report(/:familyId)" component={EhdReportPage} onEnter={requireAuth} />
         <Route path="counsel/mrd/(/:familyId)" component={MrdHome} onEnter={requireAuth} />
-        <Route path="counsel/mrd/input(/:familyId)" component={MrdInputPage} onEnter={requireAuth} />
+        <Route path="counsel/mrd/input/photo(/:familyId)" component={MrdInputPhotoPage} onEnter={requireAuth} />
+        <Route path="counsel/mrd/input/manual(/:familyId)" component={MrdInputManualPage} onEnter={requireAuth} />
         <Route path="upload" component={UploadPage} />
         <Route path="signin" component={SignIn} />
         <Route path="signup" component={SignUp} />
@@ -75,3 +63,19 @@ export const renderRoutes = () => (
     </Router>
   </Provider>
 );
+
+/*
+export const renderRoutes = () => (
+  <Router history={browserHistory}>
+    <Route path="/" component={AppContainer}>
+      <IndexRoute component={HomePage} />
+      <Route path="home" component={HomePage} />
+      <Route path="counsel/start" component={CounselHome} />
+      <Route path="counsel/step/01" component={CounselStep01Page} />
+      <Route path="upload" component={UploadPage} />
+      <Route path="signin" component={SignIn} />
+      <Route path="signup" component={SignUp} />
+    </Route>
+  </Router>
+);
+*/

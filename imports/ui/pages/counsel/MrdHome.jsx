@@ -84,7 +84,7 @@ class MrdHome extends trackerReact(React.Component) {
                     style={{ width: '40px', height: '40px', padding: '0px' }}
                     iconStyle={{ fontSize: '40px' }}
                     onTouchTap={() => {
-                      browserHistory.push(`/counsel/mrd/input/${this.familyId}`);
+                      browserHistory.push(`/counsel/mrd/input/photo/${this.familyId}`);
                     }}
                   >
                     <FontIcon
@@ -130,7 +130,9 @@ class MrdHome extends trackerReact(React.Component) {
                     className="step-button"
                     style={{ width: '40px', height: '40px', padding: '0px' }}
                     iconStyle={{ fontSize: '40px' }}
-                    onTouchTap={() => { browserHistory.push(''); }}
+                    onTouchTap={() => {
+                      browserHistory.push(`/counsel/mrd/input/manual/${this.familyId}`);
+                    }}
                   >
                     <FontIcon
                       className="icon-arrow-right-circle-background"
