@@ -60,7 +60,7 @@ class CounselHome extends trackerReact(React.Component) {
     if (user) {
       families = this.userFamilies(user._id);
       listTitle = `${user.username}님 ${families.length}명의 자녀가 등록되었습니다.`;
-      console.log('families', families);
+      // console.log('families', families);
     }
 
     return (

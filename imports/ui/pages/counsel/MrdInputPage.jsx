@@ -41,6 +41,19 @@ class EhdInputPage extends trackerReact(React.Component) {
     return UserFamily.findOne({ _id: familyId });
   }
   render() {
+    const fileInfo = {
+      userId: this.userId,
+      familyId: this.familyId,
+    };
+
+    const mealRecords = [
+      { title: '아침', mealType: 'breakFast' },
+      { title: '간식', mealType: 'snack_1' },
+      { title: '점심', mealType: 'lunch' },
+      { title: '간식', mealType: 'snack_2' },
+      { title: '저녁', mealType: 'dinner' },
+      { title: '간식', mealType: 'snack_3' },
+    ];
     return (
       <div className="root counsel-step-content content-center bg-gray">
         <Title render={(previousTitle) => `${pageTitle} - ${previousTitle}`} />
@@ -64,12 +77,15 @@ class EhdInputPage extends trackerReact(React.Component) {
             </tr>
           </tbody>
         </table>
-        <MealRecordPanel title="아침" key="breakFast" />
-        <MealRecordPanel title="간식" key="snack_1" />
-        <MealRecordPanel title="점심" key="lunch" />
-        <MealRecordPanel title="간식" key="snack_2" />
-        <MealRecordPanel title="저녁" key="dinner" />
-        <MealRecordPanel title="간식" key="snack_3" />
+        {mealRecords.map((meal, idx) => (
+          <MealRecordPanel
+            key={idx}
+            title={meal.title}
+            mealType={meal.mealType}
+            userId={this.userId}
+            familyId={this.familyId}
+          />
+        ))}
       </div>
     );
   }

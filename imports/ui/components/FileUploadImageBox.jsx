@@ -26,6 +26,7 @@ class FileUploadImgBox extends trackerReact(Component) {
     this.compId = randomString(7);
     this.imageId = `imageViewer${this.compId}`;
     this.inputFileId = `inputFile${this.compId}`;
+
     this.state = {
       uploading: [],
       progress: 0,
@@ -42,6 +43,12 @@ class FileUploadImgBox extends trackerReact(Component) {
     this.uploadIt = this.uploadIt.bind(this);
     this.onImageChange = this.onImageChange.bind(this);
   }
+  componentWillMount() {
+    const { category, mealType, mealTime, userId, familyId } = this.props;
+    this.fileInfo = {
+      category, mealType, mealTime, userId, familyId,
+    };
+  }
   componentWillUnmount() {
     this.state.subscription.files.stop();
   }
@@ -51,7 +58,8 @@ class FileUploadImgBox extends trackerReact(Component) {
   onImageChange(e) {
     e.preventDefault();
     const reader = new FileReader();
-    const file = e.target.files[0];
+    const fileInput = e.target;
+    const file = fileInput.files[0];
     const fileExtension = file && file.name.split('.').pop();
 
     // console.log(file);
@@ -81,6 +89,12 @@ class FileUploadImgBox extends trackerReact(Component) {
             fileName: file.name ? file.name.replace(`.${fileExtension}`, '') : '',
             imagePreviewUrl: reader.result,
           });
+          if (this.fileInfo) {
+            // console.log('this.fileInfo', this.fileInfo);
+            this.uploadIt(this.fileInfo, fileInput);
+          } else {
+            alert('파일정보가 없습니다. 관리자에게 문의하십시오.');
+          }
         };
         reader.readAsDataURL(file);
       }
@@ -93,28 +107,13 @@ class FileUploadImgBox extends trackerReact(Component) {
       alert(errMessage);
     }
   }
-  uploadIt(fileInfo) {
-    // console.log('e', e.currentTarget.files);
-
-    // e.preventDefault();
-    // if (e.currentTarget.files && e.currentTarget.files[0]) {
-    // const inputFile = this.inputFile;
-    if (fileInfo.inputFile && fileInfo.inputFile.files[0]) {
-      // We upload only one file, in case
-      // there was multiple files selected
-      // const file = e.currentTarget.files[0];
-      const file = fileInfo.inputFile.files[0];
+  uploadIt(fileInfo, fileInput) {
+    if (fileInput && fileInput.files[0]) {
+      const file = fileInput.files[0];
       if (file) {
         const uploadInstance = MediaFiles.insert({
           file,
-          meta: {
-            // locator: this.props.fileLocator,
-            userId: Meteor.userId(), // Optional, used to check on server for file tampering
-            caption: fileInfo.fileCap,
-            description: fileInfo.fileDesc,
-            type: fileInfo.fileType ? fileInfo.fileType : null,
-            catId: fileInfo.fileCat ? fileInfo.fileCat : null,
-          },
+          meta: this.fileInfo,
           streams: 'dynamic',
           chunkSize: 'dynamic',
           transport: 'http',
@@ -126,8 +125,6 @@ class FileUploadImgBox extends trackerReact(Component) {
           inProgress: true, // Show the progress bar now
         });
 
-        // These are the event functions, don't need most of them
-        // ,it shows where we are in the process
         uploadInstance.on('start', () => {
           // console.log('Starting');
         });
@@ -137,21 +134,6 @@ class FileUploadImgBox extends trackerReact(Component) {
         });
 
         uploadInstance.on('uploaded', (error, fileObj) => {
-          // console.log('uploaded: ', fileObj);
-
-          // Remove the filename from the upload box
-          // this.refs.fileinput.value = '';
-          this.inputFile.value = '';
-          this.inputFileCaption.setState({ value: '' });
-          this.inputFileDesc.setState({ value: '' });
-          const imgPreviewer = document.getElementById('imgPreviewer');
-          imgPreviewer.src = '/img/image.blank.svg';
-          /*
-          this.setState({
-            imagePreviewUrl: '/img/image.blank.svg',
-          });
-          */
-          // Reset our state for the next file
           this.setState({
             uploading: [],
             progress: 0,
@@ -181,19 +163,11 @@ class FileUploadImgBox extends trackerReact(Component) {
   }
   render() {
     if (this.state.subscription.files.ready()) {
-      let uploadTitle = '';
-      switch (this.props.fileType) {
-        case 'cat':
-          uploadTitle = '카테고리';
-          break;
-        case 'video':
-          uploadTitle = '동영상';
-          break;
-        case 'image':
-          uploadTitle = '이미지';
-          break;
-        default:
-          uploadTitle = this.compId; // '파일';
+      let imagePreviewUrl = MediaFiles.findOne({ meta: this.fileInfo }) ?
+        MediaFiles.findOne({ meta: this.fileInfo }).link() :
+        null;
+      if (!imagePreviewUrl) {
+        imagePreviewUrl = this.state.imagePreviewUrl;
       }
       return (
         <div>
@@ -203,8 +177,8 @@ class FileUploadImgBox extends trackerReact(Component) {
           >
             <img
               id={this.imageId}
-              src={this.state.imagePreviewUrl}
-              // src={imagePreviewUrl}
+              // src={this.state.imagePreviewUrl}
+              src={imagePreviewUrl}
               alt="Select"
               // width="200px"
               // height="130px"
@@ -217,10 +191,8 @@ class FileUploadImgBox extends trackerReact(Component) {
             <input
               type="file"
               id={this.inputFileId}
-              // ref="fileinput"
               ref={(input) => this.inputFile = input}
               disabled={this.state.inProgress}
-              // onChange={this.uploadIt}
               onChange={this.onImageChange}
               style={{ display: 'none' }}
             />
@@ -238,9 +210,11 @@ class FileUploadImgBox extends trackerReact(Component) {
 
 FileUploadImgBox.propTypes = {
   fileType: React.PropTypes.string,
-  showCategory: React.PropTypes.bool,
-  onSelectCategory: React.PropTypes.func,
-  onUploaded: React.PropTypes.func,
+  category: React.PropTypes.string,
+  mealType: React.PropTypes.string,
+  mealTime: React.PropTypes.string,
+  userId: React.PropTypes.string,
+  familyId: React.PropTypes.string,
 };
 
 export default FileUploadImgBox;

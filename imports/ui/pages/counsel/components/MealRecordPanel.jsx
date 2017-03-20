@@ -152,7 +152,7 @@ export default class MealRecordPanel extends React.Component {
   }
   openFileDialog(e) {
     e.stopPropagation();
-    
+
     console.log('e.target', e.target.id);
     const inputFile = document.getElementById('inputFile');
     inputFile.click();
@@ -165,7 +165,7 @@ export default class MealRecordPanel extends React.Component {
     });
   }
   render() {
-    const { title } = this.props;
+    const { title, mealType, userId, familyId } = this.props;
     return (
       <Paper
         className="counsel-step-button-container"
@@ -202,13 +202,25 @@ export default class MealRecordPanel extends React.Component {
                   <tr>
                     <td style={{ width: '50%' }}>
                       <div style={{ width: '100%', backgroundColor: '#EFEFEF' }}>
-                        <FileUploadImageBox />
+                        <FileUploadImageBox
+                          category="mealRecord"
+                          mealType={mealType}
+                          mealTime="before"
+                          userId={userId}
+                          familyId={familyId}
+                        />
                       </div>
                       <h4 style={{ margin: '0px' }}>식전</h4>
                     </td>
                     <td style={{ width: '50%' }}>
                       <div style={{ width: '100%', backgroundColor: '#EFEFEF' }}>
-                        <FileUploadImageBox />
+                        <FileUploadImageBox
+                          category="mealRecord"
+                          mealType={mealType}
+                          mealTime="after"
+                          userId={userId}
+                          familyId={familyId}
+                        />
                       </div>
                       <h4 style={{ margin: '0px' }}>식후</h4>
                     </td>
@@ -235,9 +247,9 @@ export default class MealRecordPanel extends React.Component {
 
 MealRecordPanel.propTypes = {
   title: React.PropTypes.string,
-  /*
-  key: React.PropTypes.oneOf([
+  mealType: React.PropTypes.oneOf([
     'breakFast', 'lunch', 'dinner', 'snack', 'snack_1', 'snack_2', 'snack_3']
   ),
-  */
+  userId: React.PropTypes.string,
+  familyId: React.PropTypes.string,
 };
