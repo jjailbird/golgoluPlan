@@ -4,14 +4,6 @@ import { Meteor } from 'meteor/meteor';
 
 import trackerReact from 'meteor/ultimatejs:tracker-react';
 import LinearProgress from 'material-ui/LinearProgress';
-import Subheader from 'material-ui/Subheader';
-import MenuItem from 'material-ui/MenuItem';
-import RaisedButton from 'material-ui/RaisedButton';
-import IconInput from 'material-ui/svg-icons/action/input';
-
-import Formsy from 'formsy-react';
-import FormsyText from 'formsy-material-ui/lib/FormsyText';
-import FormsySelect from 'formsy-material-ui/lib/FormsySelect';
 
 import randomString from '../../utils/randomString.js';
 import ToggleDisplay from 'react-toggle-display';
@@ -111,6 +103,10 @@ class FileUploadImgBox extends trackerReact(Component) {
     if (fileInput && fileInput.files[0]) {
       const file = fileInput.files[0];
       if (file) {
+        if (fileInput.dataset.mediaid) {
+          // console.log('MediaFiles.remove', fileInput.dataset.mediaid);
+          MediaFiles.remove({ _id: fileInput.dataset.mediaid });
+        }
         const uploadInstance = MediaFiles.insert({
           file,
           meta: this.fileInfo,
@@ -163,7 +159,8 @@ class FileUploadImgBox extends trackerReact(Component) {
   }
   render() {
     if (this.state.subscription.files.ready()) {
-      let imagePreviewUrl = MediaFiles.findOne({ meta: this.fileInfo }) ?
+      const MediaFile = MediaFiles.findOne({ meta: this.fileInfo });
+      let imagePreviewUrl = MediaFile ?
         MediaFiles.findOne({ meta: this.fileInfo }).link() :
         null;
       if (!imagePreviewUrl) {
@@ -195,6 +192,7 @@ class FileUploadImgBox extends trackerReact(Component) {
               disabled={this.state.inProgress}
               onChange={this.onImageChange}
               style={{ display: 'none' }}
+              data-mediaid={MediaFile ? MediaFile._id : null}
             />
           </div>
           <ToggleDisplay show={this.state.inProgress}>
