@@ -41,11 +41,6 @@ class EhdInputPage extends trackerReact(React.Component) {
     return UserFamily.findOne({ _id: familyId });
   }
   render() {
-    const fileInfo = {
-      userId: this.userId,
-      familyId: this.familyId,
-    };
-
     const mealRecords = [
       { title: '아침', mealType: 'breakFast' },
       { title: '간식', mealType: 'snack_1' },
