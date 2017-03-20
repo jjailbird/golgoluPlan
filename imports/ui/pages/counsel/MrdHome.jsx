@@ -22,7 +22,7 @@ import ehData from './data/eatingHabitQuestions';
 const ehGroups = ehData.groups;
 
 const pageTitle = '24시간 식사기록';
-class EhdReportPage extends trackerReact(React.Component) {
+class MrdHome extends trackerReact(React.Component) {
   constructor(props) {
     super(props);
     this.familyId = this.props.params.familyId;
@@ -148,7 +148,7 @@ class EhdReportPage extends trackerReact(React.Component) {
   }
 }
 
-EhdReportPage.propTypes = {
+MrdHome.propTypes = {
   dispatch: React.PropTypes.func,
   user: React.PropTypes.object,
   question: React.PropTypes.object,
@@ -164,6 +164,6 @@ function mapStateToProps(state) {
   };
 }
 
-// export default connect(mapStateToProps)(EhdReportPage);
-export default connect(mapStateToProps)(EhdReportPage);
+// export default connect(mapStateToProps)(MrdHome);
+export default connect(mapStateToProps)(MrdHome);
 

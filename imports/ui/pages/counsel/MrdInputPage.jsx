@@ -15,7 +15,7 @@ import { setPageTitle } from '../../../redux/actions/setPageTitle.js';
 
 
 const pageTitle = '24시간 식사기록(영양사)';
-class EhdInputPage extends trackerReact(React.Component) {
+class MrdInputPage extends trackerReact(React.Component) {
   constructor(props) {
     super(props);
     this.familyId = this.props.params.familyId;
@@ -86,7 +86,7 @@ class EhdInputPage extends trackerReact(React.Component) {
   }
 }
 
-EhdInputPage.propTypes = {
+MrdInputPage.propTypes = {
   dispatch: React.PropTypes.func,
   user: React.PropTypes.object,
   params: React.PropTypes.object,
@@ -98,6 +98,6 @@ function mapStateToProps(state) {
   };
 }
 
-// export default connect(mapStateToProps)(EhdInputPage);
-export default connect(mapStateToProps)(EhdInputPage);
+// export default connect(mapStateToProps)(MrdInputPage);
+export default connect(mapStateToProps)(MrdInputPage);
 

@@ -47,9 +47,7 @@ class EhdInputPage extends trackerReact(React.Component) {
   componentWillMount() {
     ehDataUserAnswers.fill(0);
     ehDataUserPoints.fill(0);
-
-    console.log('ehDataInit', ehDataUserAnswers, ehDataUserPoints);
-
+    // console.log('ehDataInit', ehDataUserAnswers, ehDataUserPoints);
     const { dispatch } = this.props;
     dispatch(setPageTitle(pageTitle));
     dispatch(setQuestionSelect(ehQuestions.groupAll[0]));
