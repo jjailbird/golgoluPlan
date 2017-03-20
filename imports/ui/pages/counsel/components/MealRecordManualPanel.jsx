@@ -39,7 +39,7 @@ export default class MealRecordManualPanel extends React.Component {
                       <td style={{ width: '50%', textAlign: 'right', cursor: 'pointer' }}>
                         <IconButton
                           iconClassName="icon-plus-circle-line"
-                          onTouchTab={() => { alert('add item!'); }}
+                          onTouchTap={() => { alert('add item!'); }}
                         />
                       </td>
                     </tr>
