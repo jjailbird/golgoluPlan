@@ -12,11 +12,6 @@ export default class MealRecordPhotoPanel extends React.Component {
       collapse: false,
     };
   }
-  togglePanel() {
-    this.setState({
-      collapse: !this.state.collapse,
-    });
-  }
   render() {
     const { title, mealType, userId, familyId } = this.props;
     return (

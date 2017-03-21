@@ -12,11 +12,13 @@ export default class MealRecordManualPanel extends React.Component {
     this.state = {
       collapse: false,
     };
+    this.addItem = this.addItem.bind(this);
   }
-  togglePanel() {
-    this.setState({
-      collapse: !this.state.collapse,
-    });
+  addItem(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    alert('Add Item!');
+    return false;
   }
   render() {
     const { title, mealType, userId, familyId } = this.props;
@@ -39,7 +41,7 @@ export default class MealRecordManualPanel extends React.Component {
                       <td style={{ width: '50%', textAlign: 'right', cursor: 'pointer' }}>
                         <IconButton
                           iconClassName="icon-plus-circle-line"
-                          onTouchTap={() => { alert('add item!'); }}
+                          onTouchTap={this.addItem}
                         />
                       </td>
                     </tr>
