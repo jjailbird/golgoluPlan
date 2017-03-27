@@ -1,10 +1,9 @@
 import React from 'react';
 import Paper from 'material-ui/Paper';
-import IconButton from 'material-ui/IconButton';
+// import IconButton from 'material-ui/IconButton';
 import FontIcon from 'material-ui/FontIcon';
 import Divider from 'material-ui/Divider';
 import { Accordion, AccordionItem } from 'react-sanfona';
-import FileUploadImageBox from '../../../components/FileUploadImageBox.jsx';
 
 export default class MealRecordManualPanel extends React.Component {
   constructor(props) {
@@ -12,13 +11,11 @@ export default class MealRecordManualPanel extends React.Component {
     this.state = {
       collapse: false,
     };
-    this.addItem = this.addItem.bind(this);
+    this.onAddButtonClick = this.onAddButtonClick.bind(this);
   }
-  addItem(e) {
-    e.preventDefault();
+  onAddButtonClick(e) {
     e.stopPropagation();
-    alert('Add Item!');
-    return false;
+    this.props.onAddButtonClick();
   }
   render() {
     const { title, mealType, userId, familyId } = this.props;
@@ -28,8 +25,9 @@ export default class MealRecordManualPanel extends React.Component {
         style={{ border: '2px solid #999', padding: '10px' }}
         zDepth={0}
       >
-        <Accordion>
+        <Accordion activeItems={0}>
           <AccordionItem
+            expanded
             title={
               <div>
                 <table style={{ width: '100%' }}>
@@ -39,9 +37,11 @@ export default class MealRecordManualPanel extends React.Component {
                         <h4 style={{ margin: '0px' }}>{title}</h4>
                       </td>
                       <td style={{ width: '50%', textAlign: 'right', cursor: 'pointer' }}>
-                        <IconButton
-                          iconClassName="icon-plus-circle-line"
-                          onTouchTap={this.addItem}
+                        <FontIcon
+                          className="icon-plus-circle-line"
+                          style={{ fontSize: '26px' }}
+                          onClick={this.onAddButtonClick}
+                          // onTouchTap={this.addItem}
                         />
                       </td>
                     </tr>
@@ -53,36 +53,7 @@ export default class MealRecordManualPanel extends React.Component {
           >
             <div>
               <Divider />
-              <table style={{ width: '100%', marginTop: '10px' }}>
-                <tbody>
-                  <tr>
-                    <td style={{ width: '50%' }}>
-                      <div style={{ width: '100%', backgroundColor: '#EFEFEF' }}>
-                        <FileUploadImageBox
-                          category="mealRecord"
-                          mealType={mealType}
-                          mealTime="before"
-                          userId={userId}
-                          familyId={familyId}
-                        />
-                      </div>
-                      <h4 style={{ margin: '0px' }}>식전</h4>
-                    </td>
-                    <td style={{ width: '50%' }}>
-                      <div style={{ width: '100%', backgroundColor: '#EFEFEF' }}>
-                        <FileUploadImageBox
-                          category="mealRecord"
-                          mealType={mealType}
-                          mealTime="after"
-                          userId={userId}
-                          familyId={familyId}
-                        />
-                      </div>
-                      <h4 style={{ margin: '0px' }}>식후</h4>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+              <h3>Meal Records</h3>
             </div>
           </AccordionItem>
         </Accordion>
@@ -98,4 +69,5 @@ MealRecordManualPanel.propTypes = {
   ),
   userId: React.PropTypes.string,
   familyId: React.PropTypes.string,
+  onAddButtonClick: React.PropTypes.func,
 };

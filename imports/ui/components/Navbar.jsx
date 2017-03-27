@@ -35,7 +35,7 @@ const styles = {
 };
 
 const naviItems = [
-  { title: 'HOME', route: '/home' },
+  // { title: 'HOME', route: '/home' },
   {
     title: '골고루플랜',
     route: '/counsel/home',
@@ -43,7 +43,7 @@ const naviItems = [
       { title: '', route: '/counsel/step/01' },
     ],
   },
-  { title: 'UPLOAD', route: '/upload' },
+  // { title: 'UPLOAD', route: '/upload' },
 ];
 
 const naviTabs = [];

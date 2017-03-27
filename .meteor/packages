@@ -26,3 +26,5 @@ ultimatejs:tracker-react
 check@1.2.5
 simple:reactive-method
 msavin:mongol
+meteorhacks:counts
+http
