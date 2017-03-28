@@ -162,7 +162,7 @@ class MrdInputManualPage extends trackerReact(React.Component) {
               onTouchTap={this.onSearchFoodName}
             >
               <Avatar icon={<SearchIcon />} />
-              test
+              {this.state.foodOpenData.length.toLocaleString()}
             </Chip>
             <FoodList fooddata={this.state.foodOpenData} />
           </div>
