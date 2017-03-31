@@ -42,6 +42,7 @@ class MrdInputManualPage extends trackerReact(React.Component) {
     this.openFoodDialog = this.openFoodDialog.bind(this);
     // this.foodOpenDataByName = this.foodOpenDataByName.bind(this);
     this.onSearchFoodName = this.onSearchFoodName.bind(this);
+    this.onTextClear = this.onTextClear.bind(this);
   }
   componentWillMount() {
     const { dispatch } = this.props;
@@ -76,15 +77,17 @@ class MrdInputManualPage extends trackerReact(React.Component) {
       foodOpenData: foodList,
     });
   }
+  onTextClear() {
+    // this.refs.searchText.value = '';
+    // document.getElementById('searchText').value = '';
+    this.setState({
+      foodOpenData: [],
+      searchText: '',
+    });
+  }
   handleClose = () => {
     this.setState({ openFoodDialog: false });
   };
-  onTextClear() {
-    this.setState({ searchText: '' });
-    // this.refs.searchText2.value = '';
-    // document.getElementById('searchText').value = '';
-  }
-
   render() {
     const mealRecords = [
       { title: '아침', mealType: 'breakFast' },
@@ -156,6 +159,9 @@ class MrdInputManualPage extends trackerReact(React.Component) {
               ref="searchText"
               id="searchText"
               floatingLabelText="음식 이름"
+              onKeyPress={(key) => { if (key.charCode === 13) this.onSearchFoodName(); }}
+              onTextClear={this.onTextClear}
+              serachText={this.state.searchText}
             />
             <Chip
               style={{ display: 'inline' }}

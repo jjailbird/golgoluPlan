@@ -44,6 +44,7 @@ export default class FoodNameAuto extends trackerReact(Component) {
     this.textid = this.props.id;
     this.onTextChange = this.onTextChange.bind(this);
     this.setSuggestionData = this.setSuggestionData.bind(this);
+    this.onTextClear = this.onTextClear.bind(this);
   }
   componentWillReceiveProps(props) {
     if (props.searchText === '') {
@@ -72,24 +73,28 @@ export default class FoodNameAuto extends trackerReact(Component) {
     this.setSuggestionData(searchText);
     // console.log(this.state.dataSource);
   }
+  onTextClear() {
+    this.foodNameAutoText.setState({ searchText: '' });
+    this.setState({ foodNameAutoClear: false });
+    this.props.onTextClear();
+  }
   render() {
     return (
       <span>
         <AutoComplete
-          ref="foodNameAutoText"
+          ref={(input) => this.foodNameAutoText = input}
           id={this.props.id}
           floatingLabelText={this.props.floatingLabelText}
           dataSource={this.state.dataSource}
           dataSourceConfig={{ text: 'DESC_KOR', value: 'DESC_KOR' }}
           onUpdateInput={this.onTextChange}
           onKeyPress={this.props.onKeyPress}
-          searchText={this.state.searchText}
         />
         <ToggleDisplay show={this.state.foodNameAutoClear}>
           <IconButton
             iconStyle={styles.icon.tiny}
             style={styles.button.tiny}
-            onClick={this.props.onTextClear}
+            onClick={this.onTextClear}
           >
             <IconContentClear />
           </IconButton>
