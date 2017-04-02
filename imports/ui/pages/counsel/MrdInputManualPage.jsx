@@ -2,7 +2,6 @@ import { Meteor } from 'meteor/meteor';
 import trackerReact from 'meteor/ultimatejs:tracker-react';
 import { UserFamily } from '../../../api/collections/UserFamily.js';
 import { FoodOpenData } from '../../../api/collections/FoodOpenData.js';
-import { MediaFiles } from '../../../api/collections/MediaFiles.js';
 
 import React from 'react';
 import Title from 'react-title-component';
@@ -11,16 +10,16 @@ import MealRecordManualPanel from './components/MealRecordManualPanel.jsx';
 
 import { connect } from 'react-redux';
 import { setPageTitle } from '../../../redux/actions/setPageTitle.js';
-import Dialog from 'material-ui/Dialog';
 import Modal from 'react-modal';
 
 import Chip from 'material-ui/Chip';
 import Avatar from 'material-ui/Avatar';
 import SearchIcon from 'material-ui/svg-icons/action/search';
-import RaisedButton from 'material-ui/RaisedButton';
-import FlatButton from 'material-ui/FlatButton';
 
-import FoodNameAuto from '../../components/FoodNameAuto.jsx';
+import TextField from 'material-ui/TextField';
+import ToggleDisplay from 'react-toggle-display';
+import IconButton from 'material-ui/IconButton';
+import IconContentClear from 'material-ui/svg-icons/content/clear';
 import FoodList from '../../components/FoodList.jsx';
 
 const pageTitle = '24시간 식사기록(간편입력)';
@@ -49,6 +48,30 @@ const modalStyle = {
 
   },
 };
+const styles = {
+  icon: {
+    tiny: {
+      width: 12,
+      height: 12,
+    },
+    small: {
+      width: 16,
+      height: 16,
+    },
+  },
+  button: {
+    tiny: {
+      width: 16,
+      height: 16,
+      padding: 0,
+      marginLeft: '-20px',
+    },
+    small: {
+      width: 32,
+      height: 32,
+    },
+  },
+};
 
 class MrdInputManualPage extends trackerReact(React.Component) {
   constructor(props) {
@@ -58,6 +81,7 @@ class MrdInputManualPage extends trackerReact(React.Component) {
     // console.log('this.props.user', this.props.user);
     this.state = {
       openFoodDialog: false,
+      foodNameClear: false,
       foodOpenData: [],
       subscription: {
         userFamilies: Meteor.subscribe('userfamilies.private'),
@@ -70,6 +94,7 @@ class MrdInputManualPage extends trackerReact(React.Component) {
     // this.foodOpenDataByName = this.foodOpenDataByName.bind(this);
     this.onSearchFoodName = this.onSearchFoodName.bind(this);
     this.onTextClear = this.onTextClear.bind(this);
+    this.onTextChange = this.onTextChange.bind(this);
   }
   componentWillMount() {
     const { dispatch } = this.props;
@@ -104,11 +129,20 @@ class MrdInputManualPage extends trackerReact(React.Component) {
       foodOpenData: foodList,
     });
   }
+  onTextChange(e, searchText) {
+    if (searchText !== '') {
+      this.setState({ foodNameClear: true });
+    } else {
+      this.setState({ foodNameClear: false });
+    }
+    // console.log('foodNameClear', this.state.foodNameClear);
+  }
   onTextClear() {
     // this.refs.searchText.value = '';
-    // document.getElementById('searchText').value = '';
+    document.getElementById('searchText').value = '';
     this.setState({
       foodOpenData: [],
+      foodNameClear: false,
       searchText: '',
     });
   }
@@ -167,14 +201,23 @@ class MrdInputManualPage extends trackerReact(React.Component) {
         >
           <div style={{ textAlign: 'center' }}>
             <h3>Food Data Test</h3>
-            <FoodNameAuto
+            <TextField
               ref="searchText"
               id="searchText"
               floatingLabelText="음식 이름"
               onKeyPress={(key) => { if (key.charCode === 13) this.onSearchFoodName(); }}
-              onTextClear={this.onTextClear}
-              serachText={this.state.searchText}
+              onChange={this.onTextChange}
+              // onTextClear={this.onTextClear}
             />
+            <ToggleDisplay show={this.state.foodNameClear}>
+              <IconButton
+                iconStyle={styles.icon.tiny}
+                style={styles.button.tiny}
+                onClick={this.onTextClear}
+              >
+                <IconContentClear />
+              </IconButton>
+            </ToggleDisplay>
             <Chip
               style={{ display: 'inline' }}
               onTouchTap={this.onSearchFoodName}
