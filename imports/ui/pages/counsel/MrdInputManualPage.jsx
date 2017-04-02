@@ -206,7 +206,7 @@ class MrdInputManualPage extends trackerReact(React.Component) {
               id="searchText"
               floatingLabelText="음식 이름"
               onKeyPress={(key) => { if (key.charCode === 13) this.onSearchFoodName(); }}
-              onChange={this.onTextChange}
+              // onChange={this.onTextChange}
               // onTextClear={this.onTextClear}
             />
             <ToggleDisplay show={this.state.foodNameClear}>
