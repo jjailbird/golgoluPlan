@@ -155,7 +155,22 @@ class MrdInputManualPage extends trackerReact(React.Component) {
           actions={actions}
         >
           <div style={{ textAlign: 'center' }}>
-           Food Data Test
+            <FoodNameAuto
+              ref="searchText"
+              id="searchText"
+              floatingLabelText="음식 이름"
+              onKeyPress={(key) => { if (key.charCode === 13) this.onSearchFoodName(); }}
+              onTextClear={this.onTextClear}
+              serachText={this.state.searchText}
+            />
+            <Chip
+              style={{ display: 'inline' }}
+              onTouchTap={this.onSearchFoodName}
+            >
+              <Avatar icon={<SearchIcon />} />
+              {this.state.foodOpenData.length.toLocaleString()}
+            </Chip>
+            <FoodList fooddata={this.state.foodOpenData} />
           </div>
         </Dialog>
       </div>
