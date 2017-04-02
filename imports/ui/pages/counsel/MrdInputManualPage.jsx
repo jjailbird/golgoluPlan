@@ -12,6 +12,7 @@ import MealRecordManualPanel from './components/MealRecordManualPanel.jsx';
 import { connect } from 'react-redux';
 import { setPageTitle } from '../../../redux/actions/setPageTitle.js';
 import Dialog from 'material-ui/Dialog';
+import Modal from 'react-modal';
 
 import Chip from 'material-ui/Chip';
 import Avatar from 'material-ui/Avatar';
@@ -23,6 +24,32 @@ import FoodNameAuto from '../../components/FoodNameAuto.jsx';
 import FoodList from '../../components/FoodList.jsx';
 
 const pageTitle = '24시간 식사기록(간편입력)';
+const modalStyle = {
+  overlay: {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  content: {
+    position: 'absolute',
+    top: '70px',
+    left: '20px',
+    right: '20px',
+    bottom: '20px',
+    border: '1px solid #ccc',
+    background: '#fff',
+    overflow: 'auto',
+    WebkitOverflowScrolling: 'touch',
+    borderRadius: '4px',
+    outline: 'none',
+    padding: '20px',
+
+  },
+};
+
 class MrdInputManualPage extends trackerReact(React.Component) {
   constructor(props) {
     super(props);
@@ -97,19 +124,6 @@ class MrdInputManualPage extends trackerReact(React.Component) {
       { title: '저녁', mealType: 'dinner' },
       { title: '간식', mealType: 'snack_3' },
     ];
-    const actions = [
-      <FlatButton
-        label="취소"
-        primary
-        onTouchTap={this.handleClose}
-      />,
-      <FlatButton
-        label="검색"
-        primary
-        keyboardFocused
-        onTouchTap={this.onSearchFoodName}
-      />,
-    ];
     return (
       <div className="root counsel-step-content content-center bg-gray">
         <Title render={(previousTitle) => `${pageTitle} - ${previousTitle}`} />
@@ -143,21 +157,34 @@ class MrdInputManualPage extends trackerReact(React.Component) {
             onAddButtonClick={this.openFoodDialog}
           />
         ))}
-        <Dialog
-          title="Search Foods"
-          id="foodSearchDialog"
-          ref="foodSearchDialog"
-          modal={false}
-          open={this.state.openFoodDialog}
+        <Modal
+          isOpen={this.state.openFoodDialog}
+          // onAfterOpen={afterOpenFn}
           onRequestClose={() => { this.setState({ openFoodDialog: false }); }}
-          titleStyle={{ padding: '10px 24px 10px' }}
-          contentStyle={{ width: '96%' }}
-          actions={actions}
+          closeTimeoutMS={2}
+          style={modalStyle}
+          contentLabel="Food Search"
         >
           <div style={{ textAlign: 'center' }}>
-           Food Data Test
+            <h3>Food Data Test</h3>
+            <FoodNameAuto
+              ref="searchText"
+              id="searchText"
+              floatingLabelText="음식 이름"
+              onKeyPress={(key) => { if (key.charCode === 13) this.onSearchFoodName(); }}
+              onTextClear={this.onTextClear}
+              serachText={this.state.searchText}
+            />
+            <Chip
+              style={{ display: 'inline' }}
+              onTouchTap={this.onSearchFoodName}
+            >
+              <Avatar icon={<SearchIcon />} />
+              {this.state.foodOpenData.length.toLocaleString()}
+            </Chip>
+            <FoodList fooddata={this.state.foodOpenData} />
           </div>
-        </Dialog>
+        </Modal>
       </div>
     );
   }
