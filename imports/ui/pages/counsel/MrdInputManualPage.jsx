@@ -20,6 +20,7 @@ import TextField from 'material-ui/TextField';
 import ToggleDisplay from 'react-toggle-display';
 import IconButton from 'material-ui/IconButton';
 import IconContentClear from 'material-ui/svg-icons/content/clear';
+import IconOff from 'material-ui/svg-icons/navigation/close';
 import FoodList from '../../components/FoodList.jsx';
 
 const pageTitle = '24시간 식사기록(간편입력)';
@@ -148,6 +149,7 @@ class MrdInputManualPage extends trackerReact(React.Component) {
   }
   handleClose = () => {
     this.setState({ openFoodDialog: false });
+    this.onTextClear();
   };
   render() {
     const mealRecords = [
@@ -194,13 +196,22 @@ class MrdInputManualPage extends trackerReact(React.Component) {
         <Modal
           isOpen={this.state.openFoodDialog}
           // onAfterOpen={afterOpenFn}
-          onRequestClose={() => { this.setState({ openFoodDialog: false }); }}
+          onRequestClose={this.handleClose}
           closeTimeoutMS={2}
           style={modalStyle}
           contentLabel="Food Search"
         >
           <div style={{ textAlign: 'center' }}>
             <h3>Food Data Test</h3>
+            <IconButton
+              tooltip="Close Window" onTouchTap={this.handleClose}
+              iconStyle={{ width: 30, height: 30 }}
+              style={{
+                position: 'absolute', display: 'inline-block',
+                fontWeight: 'bold', top: '20px', right: '10px' }}
+            >
+              <IconOff color="#000" />
+            </IconButton>
             <TextField
               ref="searchText"
               id="searchText"
