@@ -22,6 +22,7 @@ import IconButton from 'material-ui/IconButton';
 import IconContentClear from 'material-ui/svg-icons/content/clear';
 import IconOff from 'material-ui/svg-icons/navigation/close';
 import FoodList from '../../components/FoodList.jsx';
+import { orange500, blue500 } from 'material-ui/styles/colors';
 
 const pageTitle = '24시간 식사기록(간편입력)';
 const modalStyle = {
@@ -40,8 +41,9 @@ const modalStyle = {
     right: '20px',
     bottom: '20px',
     border: '1px solid #ccc',
-    background: '#fff',
-    overflow: 'auto',
+    // background: '#fff',
+    overflowY: 'auto',
+    overflowX: 'hidden',
     WebkitOverflowScrolling: 'touch',
     borderRadius: '4px',
     outline: 'none',
@@ -194,6 +196,7 @@ class MrdInputManualPage extends trackerReact(React.Component) {
           />
         ))}
         <Modal
+          className="modal-food-list"
           isOpen={this.state.openFoodDialog}
           // onAfterOpen={afterOpenFn}
           onRequestClose={this.handleClose}
@@ -202,13 +205,13 @@ class MrdInputManualPage extends trackerReact(React.Component) {
           contentLabel="Food Search"
         >
           <div style={{ textAlign: 'center' }}>
-            <h3>Food Data Test</h3>
+            <h3 style={{ margin: '10px' }}>Food Data Test</h3>
             <IconButton
               tooltip="Close Window" onTouchTap={this.handleClose}
               iconStyle={{ width: 30, height: 30 }}
               style={{
                 position: 'absolute', display: 'inline-block',
-                fontWeight: 'bold', top: '20px', right: '10px' }}
+                fontWeight: 'bold', top: '10px', right: '10px' }}
             >
               <IconOff color="#000" />
             </IconButton>
@@ -217,6 +220,7 @@ class MrdInputManualPage extends trackerReact(React.Component) {
               id="searchText"
               floatingLabelText="음식 이름"
               onKeyPress={(key) => { if (key.charCode === 13) this.onSearchFoodName(); }}
+              floatingLabelStyle={{ color: orange500 }}
               // onChange={this.onTextChange}
               // onTextClear={this.onTextClear}
             />
