@@ -33,4 +33,16 @@ if (Meteor.isServer) {
     return new Counter('fooddata-total', FoodOpenData.find(find));
     // return new Counter('fooddata-total', FoodData.find(search));
   });
+  Meteor.methods({
+    'fooddata.getByName'(foodName) {
+      check(foodName, String);
+      const find = (foodName === '') ? {} : { DESC_KOR: { $regex: `${foodName}` } };
+      const foodList = FoodOpenData.find(find, {
+      // limit: parseInt(query.limit),
+      // skip: parseInt(query.skip),
+        sort: { NUM: 1 },
+      }).fetch();
+      return foodList;
+    },
+  });
 }

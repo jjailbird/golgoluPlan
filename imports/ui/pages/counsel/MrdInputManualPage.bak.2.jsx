@@ -22,9 +22,7 @@ import IconButton from 'material-ui/IconButton';
 import IconContentClear from 'material-ui/svg-icons/content/clear';
 import IconOff from 'material-ui/svg-icons/navigation/close';
 import FoodList from '../../components/FoodList.jsx';
-import { orange500 } from 'material-ui/styles/colors';
-
-import Loader from 'react-loader';
+import { orange500, blue500 } from 'material-ui/styles/colors';
 
 const pageTitle = '24시간 식사기록(간편입력)';
 const modalStyle = {
@@ -78,28 +76,6 @@ const styles = {
   },
 };
 
-const loaderOptions = {
-  lines: 13,
-  length: 20,
-  width: 10,
-  radius: 30,
-  scale: 1.00,
-  corners: 1,
-  color: '#000',
-  opacity: 0.25,
-  rotate: 0,
-  direction: 1,
-  speed: 1,
-  trail: 60,
-  fps: 20,
-  zIndex: 2e9,
-  top: '50%',
-  left: '50%',
-  shadow: false,
-  hwaccel: false,
-  position: 'absolute',
-};
-
 class MrdInputManualPage extends trackerReact(React.Component) {
   constructor(props) {
     super(props);
@@ -107,20 +83,16 @@ class MrdInputManualPage extends trackerReact(React.Component) {
     this.userId = this.props.user ? this.props.user._id : null;
     // console.log('this.props.user', this.props.user);
     this.state = {
-      loaded: true,
       openFoodDialog: false,
       foodNameClear: false,
       foodOpenData: [],
       subscription: {
         userFamilies: Meteor.subscribe('userfamilies.private'),
-        /*
-        foodOpenData: Meteor.subscribe('food_open_data.all', {
-          onReady() { console.log('onReady!'); this.setState({ loaded: true }); },
-        }),
-        */
-        // mediaFiles: Meteor.subscribe('MediaFiles.all'),
+        foodOpenData: Meteor.subscribe('food_open_data.all'),
+        mediaFiles: Meteor.subscribe('MediaFiles.all'),
       },
     };
+
     this.openFoodDialog = this.openFoodDialog.bind(this);
     // this.foodOpenDataByName = this.foodOpenDataByName.bind(this);
     this.onSearchFoodName = this.onSearchFoodName.bind(this);
@@ -136,9 +108,8 @@ class MrdInputManualPage extends trackerReact(React.Component) {
   }
   componentWillUnmount() {
     this.state.subscription.userFamilies.stop();
-    // this.state.subscription.foodOpenData.stop();
-    // this.state.subscription.mediaFiles.stop();
-    // console.log('MrdInputManualPage', 'componentWillUnmount');
+    this.state.subscription.foodOpenData.stop();
+    this.state.subscription.mediaFiles.stop();
   }
   userFamily(familyId) {
     return UserFamily.findOne({ _id: familyId });
@@ -151,23 +122,15 @@ class MrdInputManualPage extends trackerReact(React.Component) {
   onSearchFoodName() {
     const searchText = document.getElementById('searchText').value;
     // searchText = searchText.replace(/[\-\[\]{}()*+?.,\\\^$|#\s]/g, '\\$&'); // query.search;
-    // console.log('foodOpenData.ready', this.state.subscription.foodOpenData.ready());
-    /*
     const find = (searchText === '') ? {} : { DESC_KOR: { $regex: `${searchText}` } };
     const foodList = FoodOpenData.find(find, {
+      // limit: parseInt(query.limit),
+      // skip: parseInt(query.skip),
       sort: { NUM: 1 },
     }).fetch();
-    */
-    Meteor.call('fooddata.getByName', searchText, (err, res) => {
-      this.setState({
-        foodOpenData: res,
-      });
-    });
-    /*
     this.setState({
       foodOpenData: foodList,
     });
-    */
   }
   onTextChange(e, searchText) {
     if (searchText !== '') {
@@ -203,7 +166,6 @@ class MrdInputManualPage extends trackerReact(React.Component) {
       <div className="root counsel-step-content content-center bg-gray">
         <Title render={(previousTitle) => `${pageTitle} - ${previousTitle}`} />
         <StepBar stepIndex={2} />
-        <Loader loaded={this.state.loaded} options={loaderOptions} className="spinner" />
         <table>
           <tbody>
             <tr>

@@ -29,6 +29,7 @@
     "react-center": "^1.1.1",
     "react-confirm": "^0.1.14",
     "react-dom": "^15.4.2",
+    "react-loader": "^2.4.0",
     "react-modal": "^1.7.3",
     "react-motion": "^0.4.7",
     "react-redux": "^5.0.2",
