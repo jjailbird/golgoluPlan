@@ -24,7 +24,7 @@ class FileUploadImgBox extends trackerReact(Component) {
       progress: 0,
       inProgress: false,
       subscription: {
-        files: Meteor.subscribe('MediaFiles.all'),
+        files: Meteor.subscribe('MediaFiles.private'),
       },
       lightboxIsOpen: false,
       currentImage: 0,

@@ -23,7 +23,7 @@ import IconContentClear from 'material-ui/svg-icons/content/clear';
 import IconOff from 'material-ui/svg-icons/navigation/close';
 import FoodList from '../../components/FoodList.jsx';
 import { orange500 } from 'material-ui/styles/colors';
-
+import moment from 'moment';
 import Loader from 'react-loader';
 
 const pageTitle = '24시간 식사기록(간편입력)';
@@ -109,6 +109,7 @@ class MrdInputManualPage extends trackerReact(React.Component) {
     this.state = {
       loaded: true,
       openFoodDialog: false,
+      mealType: '',
       foodNameClear: false,
       foodOpenData: [],
       subscription: {
@@ -126,6 +127,8 @@ class MrdInputManualPage extends trackerReact(React.Component) {
     this.onSearchFoodName = this.onSearchFoodName.bind(this);
     this.onTextClear = this.onTextClear.bind(this);
     this.onTextChange = this.onTextChange.bind(this);
+    this.addFoodLog = this.addFoodLog.bind(this);
+    this.removeFoodLog = this.removeFoodLog.bind(this);
   }
   componentWillMount() {
     const { dispatch } = this.props;
@@ -143,31 +146,19 @@ class MrdInputManualPage extends trackerReact(React.Component) {
   userFamily(familyId) {
     return UserFamily.findOne({ _id: familyId });
   }
-  openFoodDialog() {
+  openFoodDialog(mealType) {
     this.setState({
       openFoodDialog: true,
+      mealType,
     });
   }
   onSearchFoodName() {
     const searchText = document.getElementById('searchText').value;
-    // searchText = searchText.replace(/[\-\[\]{}()*+?.,\\\^$|#\s]/g, '\\$&'); // query.search;
-    // console.log('foodOpenData.ready', this.state.subscription.foodOpenData.ready());
-    /*
-    const find = (searchText === '') ? {} : { DESC_KOR: { $regex: `${searchText}` } };
-    const foodList = FoodOpenData.find(find, {
-      sort: { NUM: 1 },
-    }).fetch();
-    */
     Meteor.call('fooddata.getByName', searchText, (err, res) => {
       this.setState({
         foodOpenData: res,
       });
     });
-    /*
-    this.setState({
-      foodOpenData: foodList,
-    });
-    */
   }
   onTextChange(e, searchText) {
     if (searchText !== '') {
@@ -175,10 +166,8 @@ class MrdInputManualPage extends trackerReact(React.Component) {
     } else {
       this.setState({ foodNameClear: false });
     }
-    // console.log('foodNameClear', this.state.foodNameClear);
   }
   onTextClear() {
-    // this.refs.searchText.value = '';
     document.getElementById('searchText').value = '';
     this.setState({
       foodOpenData: [],
@@ -190,6 +179,30 @@ class MrdInputManualPage extends trackerReact(React.Component) {
     this.setState({ openFoodDialog: false });
     this.onTextClear();
   };
+  addFoodLog(mealType, data) {
+    const mealDate = moment().format('YYYY-MM-DD');
+    const logData = {
+      userId: this.props.user._id,
+      familyId: this.familyId,
+      mealType,
+      mealDate,
+      meal: data,
+      intake: data.SERVING_WT,
+    };
+    console.log('addFoodLog', logData);
+    Meteor.call('UserFoodLog.insert', logData, (err, res) => {
+      if (err) {
+        console.log('Meteor.call error', err);
+        alert('데이터베이스 데이터 추가중 에러가 발생하였습니다.');
+      } else {
+        console.log('Meteor.call UserFoodLog.insert');
+      }
+    });
+    this.handleClose();
+  }
+  removeFoodLog(id) {
+    console.log('removeFoodLog', id);
+  }
   render() {
     const mealRecords = [
       { title: '아침', mealType: 'breakFast' },
@@ -243,7 +256,7 @@ class MrdInputManualPage extends trackerReact(React.Component) {
           contentLabel="Food Search"
         >
           <div style={{ textAlign: 'center' }}>
-            <h3 style={{ margin: '10px' }}>Food Data Test</h3>
+            <h3 style={{ margin: '10px' }}>Food Data ({this.state.mealType})</h3>
             <IconButton
               tooltip="Close Window" onTouchTap={this.handleClose}
               iconStyle={{ width: 30, height: 30 }}
@@ -278,7 +291,11 @@ class MrdInputManualPage extends trackerReact(React.Component) {
               <Avatar icon={<SearchIcon />} />
               {this.state.foodOpenData.length.toLocaleString()}
             </Chip>
-            <FoodList fooddata={this.state.foodOpenData} />
+            <FoodList
+              fooddata={this.state.foodOpenData}
+              mealType={this.state.mealType}
+              onAddButtonClick={this.addFoodLog}
+            />
           </div>
         </Modal>
       </div>

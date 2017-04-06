@@ -1,40 +1,69 @@
+import { Meteor } from 'meteor/meteor';
+import trackerReact from 'meteor/ultimatejs:tracker-react';
+import { green500 } from 'material-ui/styles/colors';
 import React from 'react';
 import Paper from 'material-ui/Paper';
 // import IconButton from 'material-ui/IconButton';
 import FontIcon from 'material-ui/FontIcon';
 import Divider from 'material-ui/Divider';
 import { Accordion, AccordionItem } from 'react-sanfona';
+import { UserFoodLog } from '../../../../api/collections/UserFoodLog.js';
 
-export default class MealRecordManualPanel extends React.Component {
+export default class MealRecordManualPanel extends trackerReact(React.Component) {
   constructor(props) {
     super(props);
     this.state = {
       collapse: false,
+      subscription: {
+        userFoodLog: Meteor.subscribe('UserFoodLog.private.family.mealType', this.props.familyId, this.props.mealType),
+      },
     };
     this.onAddButtonClick = this.onAddButtonClick.bind(this);
   }
+  componentWillUnmount() {
+    this.state.subscription.userFoodLog.stop();
+  }
   onAddButtonClick(e) {
     e.stopPropagation();
-    this.props.onAddButtonClick();
+    this.props.onAddButtonClick(this.props.mealType);
+  }
+  userFoodLogs() {
+    return UserFoodLog.find({ mealType: this.props.mealType }).fetch();
   }
   render() {
     const { title, mealType, userId, familyId } = this.props;
+    const userFoodLogs = this.userFoodLogs();
+    console.log('userFoodLogs', userFoodLogs);
+    let totalCalorie = 0;
+    for (let i = 0; i < userFoodLogs.length; i++) {
+      totalCalorie += userFoodLogs[i].meal.NUTR_CONT1;
+    }
     return (
       <Paper
         className="counsel-step-button-container"
         style={{ border: '2px solid #999', padding: '10px' }}
         zDepth={0}
       >
-        <Accordion activeItems={0}>
+        <Accordion
+          activeItems={totalCalorie > 0 ? 1 : 0}
+        >
           <AccordionItem
-            expanded
+            key={1}
+            slug={1}
             title={
               <div>
                 <table style={{ width: '100%' }}>
                   <tbody>
                     <tr>
                       <td style={{ width: '50%', textAlign: 'left', cursor: 'pointer' }}>
-                        <h4 style={{ margin: '0px' }}>{title}</h4>
+                        <h4 style={{ margin: '0px' }}>
+                          {title}
+                          <span
+                            style={{ color: green500, paddingLeft: '14px' }}
+                          >
+                            {totalCalorie > 0 ? totalCalorie.toLocaleString() : ''}
+                          </span>
+                        </h4>
                       </td>
                       <td style={{ width: '50%', textAlign: 'right', cursor: 'pointer' }}>
                         <FontIcon
@@ -49,11 +78,15 @@ export default class MealRecordManualPanel extends React.Component {
                 </table>
               </div>
             }
-            slug={1} key={1}
           >
             <div>
               <Divider />
-              <h3>Meal Records</h3>
+              {userFoodLogs.map((log, idx) => (
+                <div key={idx}>
+                  <span>{log.meal.DESC_KOR}</span>
+                  <span>{log.meal.NUTR_CONT1}</span>
+                </div>
+              ))}
             </div>
           </AccordionItem>
         </Accordion>
