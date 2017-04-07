@@ -33,7 +33,7 @@ export default class MealRecordManualPanel extends trackerReact(React.Component)
   render() {
     const { title, mealType, userId, familyId } = this.props;
     const userFoodLogs = this.userFoodLogs();
-    console.log('userFoodLogs', userFoodLogs);
+    // console.log('userFoodLogs', userFoodLogs);
     let totalCalorie = 0;
     for (let i = 0; i < userFoodLogs.length; i++) {
       totalCalorie += userFoodLogs[i].meal.NUTR_CONT1;
@@ -59,7 +59,10 @@ export default class MealRecordManualPanel extends trackerReact(React.Component)
                         <h4 style={{ margin: '0px' }}>
                           {title}
                           <span
-                            style={{ color: green500, paddingLeft: '14px' }}
+                            style={{
+                              color: green500, paddingLeft: '14px', width: '100px',
+                              textAlign: 'right',
+                            }}
                           >
                             {totalCalorie > 0 ? totalCalorie.toLocaleString() : ''}
                           </span>
@@ -81,12 +84,20 @@ export default class MealRecordManualPanel extends trackerReact(React.Component)
           >
             <div>
               <Divider />
-              {userFoodLogs.map((log, idx) => (
-                <div key={idx}>
-                  <span>{log.meal.DESC_KOR}</span>
-                  <span>{log.meal.NUTR_CONT1}</span>
-                </div>
-              ))}
+              <table style={{ width: '100%' }}>
+                <tbody>
+                {userFoodLogs.map((log, idx) => (
+                  <tr key={idx}>
+                    <td style={{ width: '80%', textAlign: 'left' }}>
+                      <span>{log.meal.DESC_KOR}</span>
+                    </td>
+                    <td style={{ width: '20%', textAlign: 'right' }}>
+                      <span style={{ color: green500 }}>{log.meal.NUTR_CONT1}</span>
+                    </td>
+                  </tr>
+                ))}
+                </tbody>
+              </table>
             </div>
           </AccordionItem>
         </Accordion>
