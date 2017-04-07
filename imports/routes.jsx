@@ -9,6 +9,7 @@ import HomeRegister from './ui/pages/HomeRegister.jsx';
 import HomePage from './ui/pages/HomePage.jsx';
 import CounselHome from './ui/pages/counsel/CounselHome.jsx';
 import CounselSteps from './ui/pages/counsel/CounselSteps.jsx';
+import CounselAnalysis from './ui/pages/counsel/CounselAnalysis.jsx';
 import BmiInputPage from './ui/pages/counsel/BmiInputPage.jsx';
 import BmiReportPage from './ui/pages/counsel/BmiReportPage.jsx';
 import EhdInputPage from './ui/pages/counsel/EhdInputPage.jsx';
@@ -48,6 +49,7 @@ export const renderRoutes = () => (
         <Route path="counsel/step/01" component={BmiInputPage} onEnter={requireAuth} />
         <Route path="counsel/step/02(/:familyId)" component={EhdInputPage} onEnter={requireAuth} />
         <Route path="counsel/step/03(/:familyId)" component={MrdHome} onEnter={requireAuth} />
+        <Route path="counsel/analysis(/:familyId)(/:pubDate)" component={CounselAnalysis} onEnter={requireAuth} />
         <Route path="counsel/bmi/input" component={BmiInputPage} onEnter={requireAuth} />
         <Route path="counsel/bmi/report(/:familyId)(/:pubDate)" component={BmiReportPage} onEnter={requireAuth} />
         <Route path="counsel/ehd/input(/:familyId)" component={EhdInputPage} onEnter={requireAuth} />
