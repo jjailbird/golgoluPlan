@@ -75,7 +75,7 @@ class EhdInputPage extends trackerReact(React.Component) {
   }
   onConfirmGotoResult() {
     const unansweredIdx = ehDataUserAnswers.findIndex((answer) => answer === 0);
-    console.log('unansweredIdx', unansweredIdx);
+    // console.log('unansweredIdx', unansweredIdx);
 
     if (unansweredIdx > -1) {
       confirm('응답하시지 않은 질문이 있습니다, 해당 문제로 이동하시겠습니까?').then(() => {
@@ -95,7 +95,6 @@ class EhdInputPage extends trackerReact(React.Component) {
           ehDataUserAnswers,
           ehDataUserPoints,
         };
-
         // console.log('insert data:', data);
         Meteor.call('UserEhData.insert', data, (err, res) => {
           if (err) {

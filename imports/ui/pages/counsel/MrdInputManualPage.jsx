@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import trackerReact from 'meteor/ultimatejs:tracker-react';
 import { UserFamily } from '../../../api/collections/UserFamily.js';
 import { FoodOpenData } from '../../../api/collections/FoodOpenData.js';
+import { browserHistory } from 'react-router';
 
 import React from 'react';
 import Title from 'react-title-component';
@@ -16,6 +17,9 @@ import Chip from 'material-ui/Chip';
 import Avatar from 'material-ui/Avatar';
 import SearchIcon from 'material-ui/svg-icons/action/search';
 
+import Paper from 'material-ui/Paper';
+import RaisedButton from 'material-ui/RaisedButton';
+
 import TextField from 'material-ui/TextField';
 import ToggleDisplay from 'react-toggle-display';
 import IconButton from 'material-ui/IconButton';
@@ -26,6 +30,7 @@ import { orange500 } from 'material-ui/styles/colors';
 import moment from 'moment';
 import Loader from 'react-loader';
 import confirm from '../../../utils/confirm/confirm.js';
+
 
 const pageTitle = '24시간 식사기록(간편입력)';
 const modalStyle = {
@@ -155,11 +160,13 @@ class MrdInputManualPage extends trackerReact(React.Component) {
   }
   onSearchFoodName() {
     const searchText = document.getElementById('searchText').value;
-    Meteor.call('fooddata.getByName', searchText, (err, res) => {
-      this.setState({
-        foodOpenData: res,
+    if (searchText.length > 1) {
+      Meteor.call('fooddata.getByName', searchText, (err, res) => {
+        this.setState({
+          foodOpenData: res,
+        });
       });
-    });
+    }
   }
   onTextChange(e, searchText) {
     if (searchText !== '') {
@@ -265,6 +272,16 @@ class MrdInputManualPage extends trackerReact(React.Component) {
             onRemoveButtonClick={this.removeFoodLog}
           />
         ))}
+        <Paper zDepth={0}>
+          <RaisedButton
+            label="24시간 식사기록 저장"
+            labelPosition="before"
+            // icon={<IconArrowRight />}
+            onTouchTap={() => { browserHistory.push(`/counsel/steps/${this.familyId}`); }}
+            primary
+            fullWidth
+          />
+        </Paper>
         <Modal
           className="modal-food-list"
           isOpen={this.state.openFoodDialog}

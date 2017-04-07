@@ -7,6 +7,9 @@ import Title from 'react-title-component';
 import StepBar from './components/StepBar.jsx';
 import MealRecordPhotoPanel from './components/MealRecordPhotoPanel.jsx';
 
+import Paper from 'material-ui/Paper';
+import RaisedButton from 'material-ui/RaisedButton';
+
 import { connect } from 'react-redux';
 import { setPageTitle } from '../../../redux/actions/setPageTitle.js';
 import { browserHistory } from 'react-router';
@@ -78,6 +81,16 @@ class MrdInputPhotoPage extends trackerReact(React.Component) {
             familyId={this.familyId}
           />
         ))}
+        <Paper zDepth={0}>
+          <RaisedButton
+            label="24시간 식사기록 저장"
+            labelPosition="before"
+            // icon={<IconArrowRight />}
+            onTouchTap={() => { browserHistory.push(`/counsel/steps/${this.familyId}`); }}
+            primary
+            fullWidth
+          />
+        </Paper>
       </div>
     );
   }
