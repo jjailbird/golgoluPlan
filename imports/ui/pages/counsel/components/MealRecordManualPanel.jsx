@@ -84,12 +84,13 @@ export default class MealRecordManualPanel extends trackerReact(React.Component)
           >
             <div>
               <Divider />
-              <table style={{ width: '100%' }}>
+              <table style={{ width: '100%', marginTop: '5px' }}>
                 <tbody>
                 {userFoodLogs.map((log, idx) => (
                   <tr key={idx}>
                     <td style={{ width: '80%', textAlign: 'left' }}>
-                      <span>{log.meal.DESC_KOR}</span>
+                      <div>{log.meal.DESC_KOR}</div>
+                      <div style={{ fontSize: '10px', color: '#999' }}>{log.meal.SERVING_WT}g</div>
                     </td>
                     <td style={{ width: '20%', textAlign: 'right' }}>
                       <span style={{ color: green500 }}>{log.meal.NUTR_CONT1}</span>
