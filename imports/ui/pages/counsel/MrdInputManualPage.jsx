@@ -25,6 +25,7 @@ import FoodList from '../../components/FoodList.jsx';
 import { orange500 } from 'material-ui/styles/colors';
 import moment from 'moment';
 import Loader from 'react-loader';
+import confirm from '../../../utils/confirm/confirm.js';
 
 const pageTitle = '24시간 식사기록(간편입력)';
 const modalStyle = {
@@ -189,7 +190,7 @@ class MrdInputManualPage extends trackerReact(React.Component) {
       meal: data,
       intake: data.SERVING_WT,
     };
-    console.log('addFoodLog', logData);
+    // console.log('addFoodLog', logData);
     Meteor.call('UserFoodLog.insert', logData, (err, res) => {
       if (err) {
         console.log('Meteor.call error', err);
@@ -201,7 +202,19 @@ class MrdInputManualPage extends trackerReact(React.Component) {
     this.handleClose();
   }
   removeFoodLog(id) {
-    console.log('removeFoodLog', id);
+    confirm('선택한 음식을 삭제하시겠습니까?').then(() => {
+      console.log('removeFoodLog', id);
+      Meteor.call('UserFoodLog.Remove', id, (err, res) => {
+        if (err) {
+          console.log('Meteor.call error', err);
+          alert('데이터베이스 데이터 삭제중 에러가 발생하였습니다.');
+        } else {
+          console.log('Meteor.call UserFoodLog.Remove');
+        }
+      });
+    }, () => {
+      // console.log('confirm', 'canceled!');
+    });
   }
   render() {
     const mealRecords = [
@@ -212,6 +225,11 @@ class MrdInputManualPage extends trackerReact(React.Component) {
       { title: '저녁', mealType: 'dinner' },
       { title: '간식', mealType: 'snack_3' },
     ];
+
+    const mealTypeTitle = this.state.mealType ?
+      mealRecords.find((meal) => (meal.mealType === this.state.mealType)).title
+      :
+      '';
     return (
       <div className="root counsel-step-content content-center bg-gray">
         <Title render={(previousTitle) => `${pageTitle} - ${previousTitle}`} />
@@ -244,6 +262,7 @@ class MrdInputManualPage extends trackerReact(React.Component) {
             userId={this.userId}
             familyId={this.familyId}
             onAddButtonClick={this.openFoodDialog}
+            onRemoveButtonClick={this.removeFoodLog}
           />
         ))}
         <Modal
@@ -256,7 +275,10 @@ class MrdInputManualPage extends trackerReact(React.Component) {
           contentLabel="Food Search"
         >
           <div style={{ textAlign: 'center' }}>
-            <h3 style={{ margin: '10px' }}>Food Data ({this.state.mealType})</h3>
+            <h3 style={{ margin: '10px' }}>
+              Food Data
+              ({mealTypeTitle})
+            </h3>
             <IconButton
               tooltip="Close Window" onTouchTap={this.handleClose}
               iconStyle={{ width: 30, height: 30 }}
@@ -295,6 +317,7 @@ class MrdInputManualPage extends trackerReact(React.Component) {
               fooddata={this.state.foodOpenData}
               mealType={this.state.mealType}
               onAddButtonClick={this.addFoodLog}
+              onRemoveButtonClick={this.removeFoodLog}
             />
           </div>
         </Modal>
