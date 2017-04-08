@@ -21,6 +21,7 @@ import Avatar from 'material-ui/Avatar';
 import { pink900, amber500, green500 } from 'material-ui/styles/colors';
 import { browserHistory } from 'react-router';
 
+import BmiReportBox from './components/BmiReportBox.jsx';
 import StepDisplay from './components/StepDisplay.jsx';
 import StepDisplayDone from './components/StepDisplayDone.jsx';
 
@@ -118,45 +119,16 @@ class CounselAnalysis extends trackerReact(React.Component) {
             </tr>
           </tbody>
         </table>
-
-
         <Divider />
         {family ?
-          <StepDisplayDone
+          <BmiReportBox
             step="01"
             linkUrl={`/counsel/bmi/report/${family._id}/${profile.bmiPubDate}`}
             profile={profile}
           />
           :
-          <StepDisplay
-            step="01"
-            description="신체정보 입력하기"
-            icon="icon-scale"
-            linkUrl="/counsel/step/01"
-          />
+          <div></div>
         }
-        {familyEhdata ?
-          <StepDisplayDone
-            step="02"
-            description="식생활 진단 테스트"
-            icon="icon-notes"
-            linkUrl={`/counsel/ehd/report/${this.familyId}`}
-          />
-          :
-          <StepDisplay
-            step="02"
-            description="식생활 진단 테스트"
-            icon="icon-notes"
-            linkUrl={`/counsel/step/02/${this.familyId}`}
-          />
-        }
-        <StepDisplay
-          step="03"
-          description="24시간 식사 기록"
-          icon="icon-tableware"
-          linkUrl={`/counsel/step/03/${this.familyId}`}
-        />
-
         <Paper zDepth={0}>
           <RaisedButton
             label="2주간의 골고루플랜 시작하기"
