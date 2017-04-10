@@ -9,7 +9,7 @@ import Avatar from 'material-ui/Avatar';
 import { green900, green500, amber500 } from 'material-ui/styles/colors';
 
 import { browserHistory } from 'react-router';
-import { getBmiPoint, getBmiDescription } from '../functions/bmiFunctions.js';
+import { getBmiPoint, getBmiDescription, getBmiPointStep } from '../functions/bmiFunctions.js';
 
 const style = {
   step: {
@@ -24,10 +24,13 @@ class BmiReportBox extends React.PureComponent {
     const iconClass = `${icon} inline-block-vertical-middle`;
     let bmiPoint = 0;
     let bmiDesc = '';
+    let bmiStep = 0;
     if (profile) {
       bmiPoint = getBmiPoint(profile.weight, profile.height);
       bmiDesc = getBmiDescription(bmiPoint);
+      bmiStep = getBmiPointStep(bmiPoint);
     }
+    const bmiStepImage = `/img/bmi.step.0${bmiStep}.png`;
     return (
       <Paper
         className="counsel-step-button-container"
@@ -37,7 +40,7 @@ class BmiReportBox extends React.PureComponent {
           <tbody>
             <tr>
               <td style={{ width: '100px' }}>
-                Weight icon
+                <img src={bmiStepImage} alt="bmi figure" />
               </td>
               <td style={{ textAlign: 'left' }}>
                 <h1 style={{ margin: '10px 0px' }}>
