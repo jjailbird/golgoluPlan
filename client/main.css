@@ -325,3 +325,11 @@ table.reactable.food-list td {
   background: rgba(0,0,0,0.5);
   z-index: 9999;
 }
+
+.slider.ehd-average .rangeslider .rangeslider__handle {
+  display: none !important;
+}
+.slider.ehd-average .rangeslider .rangeslider__label-list .rangeslider__label {
+  top: 20px !important;
+  font-size: 12px !important;
+}

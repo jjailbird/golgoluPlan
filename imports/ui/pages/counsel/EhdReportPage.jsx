@@ -16,7 +16,6 @@ import { connect } from 'react-redux';
 import { setPageTitle } from '../../../redux/actions/setPageTitle.js';
 
 import ehData from './data/eatingHabitQuestions';
-
 const ehGroups = ehData.groups;
 
 const pageTitle = '식생활 진단 테스트 결과';
@@ -161,7 +160,7 @@ class EhdReportPage extends trackerReact(React.Component) {
   render() {
     const familyEhData = this.familyEhData(this.familyId);
     const familyEhDataPoints = familyEhData ? familyEhData.ehDataUserPoints : null;
-    const ehGroupsTest = [];
+    // const ehGroupsTest = [];
 
     return (
       <div className="root counsel-step-content bg-gray">
@@ -205,19 +204,11 @@ class EhdReportPage extends trackerReact(React.Component) {
             fullWidth
           />
         </Paper>
-
-
-        {ehGroupsTest.map((group, idx) => {
+        {/*
+          ehGroupsTest.map((group, idx) => {
           const groupCount = group.numbers.length;
-          /*
-          const groupPoints = familyEhDataPoints ?
-            group.numbers.reduce((no) => familyEhDataPoints[no - 1]) :
-            0;
-          */
-          // let groupUserPoints = 0;
           const groupPoints = familyEhDataPoints ?
             group.numbers.map((no) => familyEhDataPoints[no - 1]) : [0];
-          // console.log('groupPoints', groupPoints);
           const groupPointsTotal = groupPoints.reduce((a, b) => a + b);
           const groupPointsAverage = groupPointsTotal / groupCount;
 
@@ -230,8 +221,8 @@ class EhdReportPage extends trackerReact(React.Component) {
               <div>{groupPointsAverage.toFixed(1)}</div>
             </div>
           );
-        })}
-
+        })
+        */}
       </div>
     );
   }

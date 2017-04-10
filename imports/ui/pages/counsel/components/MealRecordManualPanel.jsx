@@ -1,12 +1,10 @@
 import { Meteor } from 'meteor/meteor';
 import trackerReact from 'meteor/ultimatejs:tracker-react';
+
 import { green500, red300 } from 'material-ui/styles/colors';
 import React from 'react';
 import Paper from 'material-ui/Paper';
-// import IconButton from 'material-ui/IconButton';
-// import IconDelete from 'material-ui/svg-icons/action/delete-forever';
 import FontIcon from 'material-ui/FontIcon';
-
 import Divider from 'material-ui/Divider';
 import { Accordion, AccordionItem } from 'react-sanfona';
 import { UserFoodLog } from '../../../../api/collections/UserFoodLog.js';

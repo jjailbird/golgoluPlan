@@ -22,9 +22,11 @@ import { pink900, amber500, green500 } from 'material-ui/styles/colors';
 import { browserHistory } from 'react-router';
 
 import BmiReportBox from './components/BmiReportBox.jsx';
-import StepDisplay from './components/StepDisplay.jsx';
-import StepDisplayDone from './components/StepDisplayDone.jsx';
+import EhdReportBox from './components/EhdReportBox.jsx';
+import MrdReportBox from './components/MrdReportBox.jsx';
+import ehData from './data/eatingHabitQuestions';
 
+const ehGroups = ehData.groups;
 const pageTitle = '식습관 분석결과';
 
 class CounselAnalysis extends trackerReact(React.Component) {
@@ -71,7 +73,24 @@ class CounselAnalysis extends trackerReact(React.Component) {
     };
     const family = this.userFamily(this.familyId);
     const familyEhdata = this.familyEhData(this.familyId);
-    // const media = this.mediaFile(this.familyId);
+    const familyEhDataPoints = familyEhdata ? familyEhdata.ehDataUserPoints : null;
+    let groupAverageTotal = 0;
+    let ehAverage = 0;
+    let ehAveragePercent = 0;
+    const pointMax = 5;
+    if (familyEhDataPoints) {
+      for (let i = 0; i < ehGroups.length; i++) {
+        const groupCount = ehGroups[i].numbers.length;
+        const groupPoints = ehGroups[i].numbers.map((no) => familyEhDataPoints[no - 1]);
+        const groupPointsTotal = groupPoints.reduce((a, b) => a + b);
+        const groupPointsAverage = groupPointsTotal / groupCount;
+        groupAverageTotal += groupPointsAverage;
+        // const pointPercent = (groupPointsAverage * 100) / pointMax;
+      }
+      ehAverage = groupAverageTotal / ehGroups.length;
+      ehAveragePercent = (ehAverage * 100) / pointMax;
+    }
+
     if (family) {
       profile.name = family.name;
       // profile.sex = family.sex;
@@ -129,6 +148,16 @@ class CounselAnalysis extends trackerReact(React.Component) {
           :
           <div></div>
         }
+        {familyEhdata ?
+          <EhdReportBox
+            averagePercent={ehAveragePercent}
+          />
+          :
+          <div></div>
+        }
+        <MrdReportBox
+          familyId={this.familyId}
+        />
         <Paper zDepth={0}>
           <RaisedButton
             label="2주간의 골고루플랜 시작하기"
